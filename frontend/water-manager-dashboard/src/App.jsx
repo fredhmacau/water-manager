@@ -1,14 +1,15 @@
 import { Fragment } from "react";
-import Login from "./pages/Login"
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
 
 function App() {
   
 
   return (
     <Fragment>
-      <Login/>
+      <Dashboard/>
     </Fragment>
   )
 }
 
-export default App
+export default App;
