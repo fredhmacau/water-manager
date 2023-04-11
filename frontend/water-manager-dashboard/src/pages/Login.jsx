@@ -12,8 +12,9 @@ import {
 } from "@chakra-ui/react";
 import logo from "../assets/logo.png";
 import { useForm } from "react-hook-form";
-
+import {useNavigate} from "react-router-dom";
 import React from "react";
+import FadeIn from "../components/animation/FadeIn";
 
 const Login = React.memo((props) => {
   const {
@@ -22,10 +23,13 @@ const Login = React.memo((props) => {
     watch,
     formState: { isSubmitting, errors },
   } = useForm();
+  let navigate=useNavigate()
   const onLogin =async function (data) {
     console.log(await data);
+    navigate("/admin/overview")
   };
   return (
+    <FadeIn>
     <Flex
       w="full"
       flexDirection="column"
@@ -33,20 +37,23 @@ const Login = React.memo((props) => {
       alignItems="center"
       bgColor="#363740"
       h="100vh"
+      maxH="full"
     >
       <VStack
         display="flex"
         flexDir="column"
         w="full"
         h="full"
+        maxW={{sm:"18.75rem",md:"380px"}}
         borderRadius="md"
-        maxW="380px"
+        
         maxH="582px"
         bgColor="#FFFFFF"
         pt="2rem"
         shadow="md"
         spacing="1rem"
       >
+       
         <Image src={logo} alt="water manager login" />
         <Text
           fontFamily="Mulish"
@@ -73,7 +80,7 @@ const Login = React.memo((props) => {
           fontSize="1.5rem"
           fontStyle="normal"
         >
-          Log In em Drain-easy
+        Sessão em Drain-easy
         </Text>
         <Text
           fontFamily="Mulish"
@@ -94,7 +101,7 @@ const Login = React.memo((props) => {
           display="flex"
           flexDirection="column"
           onSubmit={handleSubmit(onLogin)}
-          pt="2rem"
+          pt="1.5rem"
           px="2rem"
         >
           <VStack mt="1.4em" spacing="1rem">
@@ -129,7 +136,7 @@ const Login = React.memo((props) => {
                 borderColor="#cbd5e0a3"
                 borderRadius="8px"
                 {...register("email", {
-                  required: "Email is required",
+                  required: "email é obrigatório",
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                     message: "Endereço de email inválido",
@@ -174,7 +181,7 @@ const Login = React.memo((props) => {
                 borderColor="#cbd5e0a3"
                 borderRadius="8px"
                 {...register("password", {
-                  required: "password is required",
+                  required: "senha é obrigatório",
                   
                 })}
               />
@@ -191,13 +198,15 @@ const Login = React.memo((props) => {
                 flexDirection="column"
                 alignItems="center"
                 justifyContent="center"
-                backgroundColor="#3751FF"
+                backgroundColor="#0c9368"
+                // {"#0b1e9f"#29CC97"}
+                //{"#13ab09"} color
                 variant="ghost"
                 isLoading={isSubmitting}
                 type="submit"
                 boxShadow="0px 4px 12px rgba(55, 81, 255, 0.24)"
                 color="#FFFFFF"
-                _hover={{ color: "#3751FF", backgroundColor: "#ffffff" }}
+                _hover={{ color: "#046848", backgroundColor: "#ffffff" }}
                 lineHeight="1.25rem"
                 fontSize="0.875rem"
                 fontFamily="mulish"
@@ -211,6 +220,7 @@ const Login = React.memo((props) => {
         </chakra.form>
       </VStack>
     </Flex>
+        </FadeIn>
   );
 });
 
