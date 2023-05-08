@@ -1,0 +1,1 @@
+from .resident_route import resident_route

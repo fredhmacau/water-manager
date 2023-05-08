@@ -9,24 +9,45 @@ import {
   Input,
   FormErrorMessage,
   Button,
+  Alert,
+  AlertTitle,
+  AlertIcon,
+  AlertDescription,
 } from "@chakra-ui/react";
 import logo from "../assets/logo.png";
 import { useForm } from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import React from "react";
 import FadeIn from "../components/animation/FadeIn";
+import useHttp from "../Hooks/useHttp";
+import { useState } from "react";
 
-const Login = React.memo((props) => {
+const Login = React.memo( (props) => {
+  const [error, setError] = useState(false);
   const {
     register,
     handleSubmit,
-    watch,
     formState: { isSubmitting, errors },
   } = useForm();
-  let navigate=useNavigate()
+
+  let navigate=useNavigate();
+  const {loginAdmin}=useHttp();
+  
   const onLogin =async function (data) {
-    console.log(await data);
-    navigate("/admin/overview")
+
+   const response=loginAdmin(data)
+    await response.then((resp)=>{
+      if (resp.status===200) {
+        localStorage.setItem("access_token",resp.data["msg"]["access_token"])
+        localStorage.setItem("entity_status",resp.data["msg"]["status"])
+        navigate("/admin/overview")
+        setError(false)
+      }
+    }).catch((error)=>{
+        
+      setError(true);
+    })
+   
   };
   return (
     <FadeIn>
@@ -92,22 +113,51 @@ const Login = React.memo((props) => {
           textAlign="center"
           color="#9FA2B4"
         >
-          Insira seu email e senha abaixo
+          Insira seu username e senha abaixo
         </Text>
         {"----------------------------------------------"}
         {/*formulario*/}
+        {error && (
+                  <Flex w="full" mt="2" mb="1">
+                    <Alert
+                      display="flex"
+                      fontFamily="Mulish"
+                      status="error"
+                      fontStyle="normal"
+                      fontWeight="400"
+                      lineHeight="1.25rem"
+                      fontSize="0.875rem"
+                      letterSpacing="0.3px"
+                      textAlign="center"
+                      variant="solid"
+                      justifyContent="center"
+                    >
+                      <Flex
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        <AlertIcon />
+              
+                        <AlertDescription>
+                          Nome de usuário ou password inválido!
+                        </AlertDescription>
+                      </Flex>
+                    </Alert>
+                  </Flex>
+                )}
         <chakra.form
           w="full"
           display="flex"
           flexDirection="column"
           onSubmit={handleSubmit(onLogin)}
-          pt="1.5rem"
+          pt="1rem"
           px="2rem"
         >
-          <VStack mt="1.4em" spacing="1rem">
-            <FormControl isInvalid={errors.email}>
+          <VStack mt="1em" spacing="1rem">
+            <FormControl isInvalid={errors.username}>
               <FormLabel
-                htmlFor="email"
+                htmlFor="username"
                 fontStyle="normal"
                 pl="1"
                 textTransform="uppercase"
@@ -118,10 +168,10 @@ const Login = React.memo((props) => {
                 letterSpacing="0.3px"
                 color="#9FA2B4"
               >
-                email
+                username
               </FormLabel>
               <Input
-                id="email"
+                id="username"
                 sx={{ backgroundColor: "#FCFDFE" }}
                 p="1rem"
                 color="#4B506D"
@@ -130,22 +180,19 @@ const Login = React.memo((props) => {
                 fontSize="0.875rem"
                 fontFamily="mulish"
                 letterSpacing="0.3px"
-                placeholder="Inserir email"
+                placeholder="Inserir nome de usuário"
                 border="2px"
-                type="email"
+                type="text"
                 borderColor="#cbd5e0a3"
                 borderRadius="8px"
-                {...register("email", {
-                  required: "email é obrigatório",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    message: "Endereço de email inválido",
-                  },
+                {...register("username", {
+                  required: "username é obrigatório",
+                  
                 })}
               />
               <FormErrorMessage>
-                {errors.email && (
-                  <Text color="red">{errors.email.message}</Text>
+                {errors.username && (
+                  <Text color="red">{errors.username.message}</Text>
                 )}
               </FormErrorMessage>
             </FormControl>
@@ -198,8 +245,8 @@ const Login = React.memo((props) => {
                 flexDirection="column"
                 alignItems="center"
                 justifyContent="center"
-                backgroundColor="#0c9368"
-                // {"#0b1e9f"#29CC97"}
+                backgroundColor="#1b9f0b"
+                // {#29CC97"}
                 //{"#13ab09"} color
                 variant="ghost"
                 isLoading={isSubmitting}

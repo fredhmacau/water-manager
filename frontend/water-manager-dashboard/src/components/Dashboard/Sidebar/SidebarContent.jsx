@@ -1,14 +1,17 @@
 import { Flex, Img} from "@chakra-ui/react";
-
+import {Link as RouteLink}  from "react-router-dom";
 export default function SidebarContent(props) {
-  const { icon, describe, ...rest } = props;
+
+  const { icon, describe,link} = props;
   return (
-    <Flex
+    
+    <RouteLink style={{width:"100%"}} to={link} replace>
+      <Flex
       w="full"
       align="center"
       px="3rem"
       py="3"
-      {...rest}
+     
       cursor="pointer"
       role="group"
       transition=".15 ease"
@@ -25,5 +28,6 @@ export default function SidebarContent(props) {
       {icon && <Img src={icon}  mx="4" boxSize="4" w="1rem" h="1rem" />}
       {describe}
     </Flex>
+    </RouteLink>
   );
 }

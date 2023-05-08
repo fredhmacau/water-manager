@@ -46,6 +46,7 @@ export default function Sidebar() {
       <Flex w="full" mt="2rem" direction="column" alignItems="center">
         <SidebarContent
           icon={OverviewIcon}
+          link="/admin/overview"
           describe="Início"
           _hover={{
             borderLeft:"2px solid #DDE2FF",
@@ -55,6 +56,7 @@ export default function Sidebar() {
         <SidebarContent
           icon={pacotesIcon}
           describe="Pacotes"
+          link="/admin/packages"
           _hover={{
             borderLeft:"2px solid #DDE2FF",
             bg:"#9FA2B4"
@@ -63,6 +65,7 @@ export default function Sidebar() {
         <SidebarContent
           icon={registersIcon}
           describe="Registrados"
+          link="/admin/registers"
           _hover={{
             borderLeft:"2px solid #DDE2FF",
             bg:"#9FA2B4"
@@ -72,6 +75,7 @@ export default function Sidebar() {
         <SidebarContent
           icon={insertIcon}
           describe="Cadastrar"
+          link="/admin/register"
           _hover={{
             borderLeft:"2px solid #DDE2FF",
             bg:"#9FA2B4"

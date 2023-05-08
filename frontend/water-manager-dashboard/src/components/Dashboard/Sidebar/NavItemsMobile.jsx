@@ -51,6 +51,7 @@ const NavItemsMobile = function (props) {
         <SidebarContent
           icon={OverviewIcon}
           describe="Início"
+          link="/admin/overview"
           _hover={{
             borderLeft:"2px solid #DDE2FF",
             bg:"#9FA2B4"
@@ -58,6 +59,7 @@ const NavItemsMobile = function (props) {
         />
         <SidebarContent
           icon={pacotesIcon}
+          link="/admin/packages"
           describe="Pacotes"
           _hover={{
             borderLeft:"2px solid #DDE2FF",
@@ -67,6 +69,7 @@ const NavItemsMobile = function (props) {
         <SidebarContent
           icon={registersIcon}
           describe="Registrados"
+          link="/admin/registers"
           _hover={{
             borderLeft:"2px solid #DDE2FF",
             bg:"#9FA2B4"
@@ -76,6 +79,7 @@ const NavItemsMobile = function (props) {
         <SidebarContent
           icon={insertIcon}
           describe="Cadastrar"
+          link="/admin/register"
           _hover={{
             borderLeft:"2px solid #DDE2FF",
             bg:"#9FA2B4"
@@ -85,6 +89,7 @@ const NavItemsMobile = function (props) {
         <SidebarContent
           icon={configIcon}
           describe="Configurações"
+          link="/admin/packages"
           _hover={{
             borderLeft:"2px solid #DDE2FF",
             bg:"#9FA2B4"

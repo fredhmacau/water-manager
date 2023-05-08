@@ -13,8 +13,53 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { Chart } from "react-google-charts";
+
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,Legend,Line} from 'recharts'
 const OverviewComponent = React.memo((props) => {
+  const data = [
+    {
+      name: 'Page A',
+      uv: 4000,
+      pv: 2400,
+      amt: 2400,
+    },
+    {
+      name: 'Page B',
+      uv: 3000,
+      pv: 1398,
+      amt: 2210,
+    },
+    {
+      name: 'Page C',
+      uv: 2000,
+      pv: 9800,
+      amt: 2290,
+    },
+    {
+      name: 'Page D',
+      uv: 2780,
+      pv: 3908,
+      amt: 2000,
+    },
+    {
+      name: 'Page E',
+      uv: 1890,
+      pv: 4800,
+      amt: 2181,
+    },
+    {
+      name: 'Page F',
+      uv: 2390,
+      pv: 3800,
+      amt: 2500,
+    },
+    {
+      name: 'Page G',
+      uv: 3490,
+      pv: 4300,
+      amt: 2100,
+    },
+  ];
   return (
     <Flex bg="#F7F8FC" minH="850px" {...props}>
       <Flex w="full" mt="2rem" >
@@ -73,6 +118,8 @@ const OverviewComponent = React.memo((props) => {
             alignItems="center"
             border="1px solid #DFE0EB"
             rounded="md"
+            borderLeft="4px solid #1b9f0b"
+            shadow="md"
           >
             <VStack spacing="1.5rem">
               <Text
@@ -109,6 +156,8 @@ const OverviewComponent = React.memo((props) => {
             border="1px solid #DFE0EB"
             rounded="md"
             cursor="pointer"
+            borderLeft="4px solid #0b1e9f"
+            shadow="md"
           >
             <VStack spacing="1.5rem">
               <Text
@@ -145,6 +194,8 @@ const OverviewComponent = React.memo((props) => {
             border="1px solid #DFE0EB"
             rounded="md"
             cursor="pointer"
+            borderLeft="4px solid #e1a214"
+            shadow="md"
           >
             <VStack spacing="1.5rem">
               <Text
@@ -195,26 +246,36 @@ const OverviewComponent = React.memo((props) => {
             colSpan={3}
             py="4"
           >
-            <Chart
-              chartType="AreaChart"
-              width="100%"
-              height="400px"
-              loader={<div>Loading Chart</div>}
-              data={[
-                ["Year", "litros"],
-                ["2010", 1000],
-                ["2011", 1170],
-                ["2012", 660],
-                ["2013", 1030],
-              ]}
-              options={{
-                title: "Consumo total",
-                curveType: "function",
-                legend: { position: "top right" },
-              }}
-              rootProps={{ "data-testid": "1" }}
-              style={{ fontFamily: "Mulish", color: "#9FA2B4" }}
-            />
+            
+
+
+
+
+
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart
+          width={500}
+          height={400}
+          data={data}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+          <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+          <Legend verticalAlign="top" height={36}/>
+          
+          <Line name="consumo total" type="monotone" dataKey="consumo total" stroke="#82ca9d" />
+        </AreaChart>
+      </ResponsiveContainer>
+    
           </GridItem>
           <GridItem
             w="full"

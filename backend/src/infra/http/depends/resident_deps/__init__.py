@@ -1,0 +1,1 @@
+from .resident_deps import ResidentToken

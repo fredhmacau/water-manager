@@ -14,13 +14,16 @@
     "@emotion/styled": "^11.10.5",
     "@fontsource/mulish": "^4.5.14",
     "@fontsource/raleway": "^4.5.12",
+    "axios": "^1.4.0",
+    "form-data": "^4.0.0",
     "framer-motion": "^9.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-google-charts": "^4.0.0",
     "react-hook-form": "^7.43.1",
     "react-icons": "^4.8.0",
-    "react-router-dom": "^6.10.0"
+    "react-router-dom": "^6.10.0",
+    "recharts": "^2.5.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
