@@ -9,24 +9,41 @@ import {
     Input,
     FormErrorMessage,
     Button,
+    Alert,
+  AlertTitle,
+  AlertIcon,
+  AlertDescription,
   } from "@chakra-ui/react";
-  import logo from "../assets/logo.png";
-  import { useForm } from "react-hook-form";
-  import {useNavigate} from "react-router-dom";
-  import React from "react";
-  import FadeIn from "../components/animation/FadeIn";
-  
-  const LoginResident = React.memo((props) => {
+import logo from "../assets/logo.png";
+import { useForm } from "react-hook-form";
+import {useNavigate} from "react-router-dom";
+import React from "react";
+import FadeIn from "../components/animation/FadeIn";
+import useHttp from "../Hooks/useHttp";
+import { useState } from "react";
+
+const LoginResident = React.memo((props) => {
+    const [error, setError] = useState(false);
     const {
       register,
       handleSubmit,
-      watch,
       formState: { isSubmitting, errors },
     } = useForm();
     let navigate=useNavigate()
+    const {loginResident}=useHttp()
     const onLogin =async function (data) {
-      console.log(await data);
-      navigate("/admin/overview")
+      const response=loginResident(data)
+      await response.then((resp)=>{
+        if (resp.status===200) {
+          localStorage.setItem("access_token",resp.data["msg"]["access_token"])
+          localStorage.setItem("entity_status",resp.data["msg"]["status"])
+          navigate("/resident/overview")
+          setError(false)
+        }
+      }).catch((error)=>{
+          
+        setError(true);
+      })
     };
     return (
       <FadeIn>
@@ -95,6 +112,35 @@ import {
             Insira seu email e senha abaixo
           </Text>
           {"----------------------------------------------"}
+          {error && (
+                  <Flex w="full" mt="2" mb="1">
+                    <Alert
+                      display="flex"
+                      fontFamily="Mulish"
+                      status="error"
+                      fontStyle="normal"
+                      fontWeight="400"
+                      lineHeight="1.25rem"
+                      fontSize="0.875rem"
+                      letterSpacing="0.3px"
+                      textAlign="center"
+                      variant="solid"
+                      justifyContent="center"
+                    >
+                      <Flex
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        <AlertIcon />
+              
+                        <AlertDescription>
+                          Nome de usuário ou password inválido!
+                        </AlertDescription>
+                      </Flex>
+                    </Alert>
+                  </Flex>
+                )}
           {/*formulario*/}
           <chakra.form
             w="full"
@@ -105,9 +151,9 @@ import {
             px="2rem"
           >
             <VStack mt="1.4em" spacing="1rem">
-              <FormControl isInvalid={errors.email}>
+              <FormControl isInvalid={errors.username}>
                 <FormLabel
-                  htmlFor="email"
+                  htmlFor="username"
                   fontStyle="normal"
                   pl="1"
                   textTransform="uppercase"
@@ -118,10 +164,10 @@ import {
                   letterSpacing="0.3px"
                   color="#9FA2B4"
                 >
-                  email
+                  nome de usuário
                 </FormLabel>
                 <Input
-                  id="email"
+                  id="username"
                   sx={{ backgroundColor: "#FCFDFE" }}
                   p="1rem"
                   color="#4B506D"
@@ -130,22 +176,19 @@ import {
                   fontSize="0.875rem"
                   fontFamily="mulish"
                   letterSpacing="0.3px"
-                  placeholder="Inserir email"
+                  placeholder="Inserir username"
                   border="2px"
-                  type="email"
+                  type="username"
                   borderColor="#cbd5e0a3"
                   borderRadius="8px"
-                  {...register("email", {
-                    required: "email é obrigatório",
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                      message: "Endereço de email inválido",
-                    },
+                  {...register("username", {
+                    required: "username é obrigatório",
+                    
                   })}
                 />
                 <FormErrorMessage>
-                  {errors.email && (
-                    <Text color="red">{errors.email.message}</Text>
+                  {errors.username && (
+                    <Text color="red">{errors.username.message}</Text>
                   )}
                 </FormErrorMessage>
               </FormControl>

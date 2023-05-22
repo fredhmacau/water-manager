@@ -50,7 +50,7 @@ class ResidentToken:
             try:
                 values={"resident_id":user_auth['resident_id']}
                 token=jwt.encode(values,SECRET,ALGORITHM)
-                return response.msg_ok(msg={"access_token":token,"token_type":"Bearer","status":"admin"})
+                return response.msg_ok(msg={"access_token":token,"token_type":"Bearer","status":"resident"})
             except (Exception) as exc:
                 raise response.msg_created_error({"error":f"{exc}"})
         else:

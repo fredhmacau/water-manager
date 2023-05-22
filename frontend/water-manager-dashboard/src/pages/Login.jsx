@@ -32,9 +32,7 @@ const Login = React.memo( (props) => {
 
   let navigate=useNavigate();
   const {loginAdmin}=useHttp();
-  
   const onLogin =async function (data) {
-
    const response=loginAdmin(data)
     await response.then((resp)=>{
       if (resp.status===200) {

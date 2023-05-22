@@ -13,7 +13,9 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import * as React from "react";
-
+import { useEffect,useState } from "react";
+import useHttp from "../../../Hooks/useHttp";
+import { Spinner } from "@chakra-ui/react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,Legend,Line} from 'recharts'
 const OverviewComponent = React.memo((props) => {
   const data = [
@@ -60,7 +62,31 @@ const OverviewComponent = React.memo((props) => {
       amt: 2100,
     },
   ];
+  const [adminInfo,setAdminInfo]=useState({})
+  const {getAdminInfo}=useHttp();
+  const [loading, setLoading] = useState(true);
+  useEffect(()=>{
+    getAdminInfo(localStorage.getItem("access_token"))
+      .then((resp)=>{
+        
+        setAdminInfo({...resp.data})
+        setLoading(false);
+      }).catch((err) => setLoading(true));
+    }
+  ,[])
   return (
+    <>
+    {loading ? (
+        <Flex
+          w="full"
+          h="full"
+          mt="6rem"
+          align="center"
+          justifyContent="center"
+        >
+          <Spinner size="xl" />
+        </Flex>
+      ) :(
     <Flex bg="#F7F8FC" minH="850px" {...props}>
       <Flex w="full" mt="2rem" >
         <HStack spacing="2px" w="full" px="4" justifyContent="space-between">
@@ -87,11 +113,12 @@ const OverviewComponent = React.memo((props) => {
               lineHeight="20px"
               opacity="0.7"
             >
-              Isaac António
+              {adminInfo["info_admin"]["username"]}
             </Text>
             <Wrap mt={{ base: "0", lg: "-1.5" }} ml="2">
               <WrapItem>
-                <Avatar size="sm" bg="blue.300" name="isaac antónio" />
+                <Avatar src={`http://127.0.0.1:8000/v1.0/admin/view_image_admin/${localStorage.getItem("access_token")}`} 
+                size="sm" bg="blue.300" name="isaac antónio" />
               </WrapItem>
             </Wrap>
           </Flex>
@@ -142,7 +169,7 @@ const OverviewComponent = React.memo((props) => {
                 letterSpacing="1px"
                 color=" #252733"
               >
-                60
+                {adminInfo["all_residents"]}
               </Text>
             </VStack>
           </Box>
@@ -180,7 +207,7 @@ const OverviewComponent = React.memo((props) => {
                 letterSpacing="1px"
                 color=" #252733"
               >
-                12
+                {adminInfo["all_peding_payment"]}
               </Text>
             </VStack>
           </Box>
@@ -207,7 +234,7 @@ const OverviewComponent = React.memo((props) => {
                 letterSpacing="0.4px"
                 color="#9FA2B4"
               >
-                Pacotes registrados
+                Dispositivos
               </Text>
               <Text
                 fontFamily="Mulish"
@@ -218,7 +245,7 @@ const OverviewComponent = React.memo((props) => {
                 letterSpacing="1px"
                 color=" #252733"
               >
-                4
+                {adminInfo["devices"]}
               </Text>
             </VStack>
           </Box>
@@ -229,7 +256,7 @@ const OverviewComponent = React.memo((props) => {
         <Grid
           w="full"
           h="400px"
-          templateRows="repeat (2,1fr)"
+          templateRows="repeat(2,1fr)"
           templateColumns="repeat(4,1fr)"
         >
           <GridItem
@@ -435,7 +462,10 @@ const OverviewComponent = React.memo((props) => {
         </Grid>
       </Flex>
     </Flex>
-  );
+)}  
+    </>
+  )
+         
 });
 
 export default OverviewComponent;
