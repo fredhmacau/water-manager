@@ -16,6 +16,7 @@ import * as React from "react";
 import { useEffect,useState } from "react";
 import useHttp from "../../../Hooks/useHttp";
 import { Spinner } from "@chakra-ui/react";
+import {FiLogOut} from "react-icons/fi"
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,Legend,Line} from 'recharts'
 const OverviewComponent = React.memo((props) => {
   const data = [
@@ -121,6 +122,9 @@ const OverviewComponent = React.memo((props) => {
                 size="sm" bg="blue.300" name="isaac antónio" />
               </WrapItem>
             </Wrap>
+          <Box ml="1rem" mt="0.2rem">
+          <FiLogOut/>
+          </Box>
           </Flex>
         </HStack>
       </Flex>

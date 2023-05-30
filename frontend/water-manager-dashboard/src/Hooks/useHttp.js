@@ -1,6 +1,7 @@
 import adminLogin from "./core/admin/adminLogin"
 import residentLogin from "./core/resident/residentLogin";
 import getInfoAdmin from "./core/admin/getInfoAdmin";
+import registerResident from "./core/admin/registerResident";
 const useHttp=function(){
     const loginAdmin=async function(values){
         const response=await adminLogin(values)
@@ -18,11 +19,16 @@ const useHttp=function(){
         const response=await getRegistersSize(token)
         return response;
     }
+    const insertResident=async function(values,img){
+        const response=await registerResident(values,img)
+        return response;
+    }
     return {
         loginAdmin,
         loginResident,
         getAdminInfo,
-        getRegistersSize
+        getRegistersSize,
+        insertResident
     }
 }
 

@@ -19,6 +19,7 @@ class Resident(SQLModel,table=True):
         default=None, sa_column=sa.Column(sa.LargeBinary))
     img_name: Optional[str] = Field(default=None, nullable=False)
     img_type: str = Field(default=None, nullable=False)
+    bi:str=Field(default=None,nullable=False)
     admin_id:str = Field(default=None, sa_column=Column(
         String, ForeignKey("admin.admin_id", ondelete="CASCADE", onupdate="CASCADE")))
     created_at: date.datetime = Field(

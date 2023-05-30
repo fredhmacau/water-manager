@@ -33,7 +33,8 @@ def register_account_resident(data:dict,img:dict,admin_id):
                 img=img["read"],
                 residence_n=data['residence_n'],
                 img_name=img["img_filename"],
-                img_type=img["img_type"]
+                img_type=img["img_type"],
+                bi=data["bi"]
             )
             conn.add(add_resident)
             conn.commit()

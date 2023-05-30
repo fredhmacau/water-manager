@@ -28,7 +28,7 @@ import InsertForm from "./InsertForm";
               letterSpacing="0.4px"
               opacity="0.7"
             >
-              Realizar pagamento
+              Cadastrar Usuário
             </Text>
             <Flex>
               <Text
