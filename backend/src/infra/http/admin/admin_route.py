@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Depends,UploadFile,File
+from fastapi import APIRouter,Depends,UploadFile,File,BackgroundTasks
 from starlette.requests import Request
 from src.infra.http.depends import AdminToken
 from fastapi.security.oauth2 import OAuth2PasswordBearer
@@ -28,16 +28,13 @@ async def admin_login(form_data:Request):
     return admin_token.create_access_token(data)
 
 @admin_route.post("/create_account_resident",tags=['admin'])
-async def create_account_resident(form_data:Request,image:UploadFile=File(...),
+async def create_account_resident(form_data:Request,
+                                        backgrountask:BackgroundTasks,
                                      token:str=Depends(oauth2)):
     data=await form_data.form()
     id_admin=admin_token.get_current_user(token)
-    img_resident={
-        "read":await image.read(),
-        "img_type":image.content_type,
-        "img_filename":image.filename
-    }
-    return adapter.create_account_resident(data,img_resident,id_admin)
+    
+    return adapter.create_account_resident(data,id_admin,backgrountask)
 
 @admin_route.get("/view_image_admin/{token}",tags=['admin'])
 async def view_image_admin(token:str):

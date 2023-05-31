@@ -6,7 +6,7 @@ export default async function registerResident(values, img) {
   form.append("username", `${values.firstname} +${values.last_name}`);
   form.append("email", values.email_address);
   form.append("contact", values.contact);
-  form.append("image", img);
+  form.append("bi", values.bi);
   const formHeaders = form.getHeaders;
 
   const result = await instance.get("/admin/get_info_admin", (data = form), {

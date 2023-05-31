@@ -5,6 +5,7 @@ from infobip_api_client.model.sms_response import SmsResponse
 from infobip_api_client.model.sms_textual_message import SmsTextualMessage
 from infobip_api_client.api.send_sms_api import SendSmsApi
 from infobip_api_client.exceptions import ApiException
+from logging import log
 #config msg 
 
 def sender_sms(content,contact):

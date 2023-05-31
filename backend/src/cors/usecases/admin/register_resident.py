@@ -17,7 +17,7 @@ def generator_password():
     number=random.randint(100000,999999)
     return number
 
-def register_account_resident(data:dict,img:dict,admin_id):
+def register_account_resident(data:dict,admin_id,backgroundtask):
 
     try:
         
@@ -30,10 +30,9 @@ def register_account_resident(data:dict,img:dict,admin_id):
                 username=data['username'],
                 email=data['email'],
                 password=encode_password(str(password_generate)),
-                img=img["read"],
+                
                 residence_n=data['residence_n'],
-                img_name=img["img_filename"],
-                img_type=img["img_type"],
+                
                 bi=data["bi"]
             )
             conn.add(add_resident)

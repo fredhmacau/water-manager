@@ -21,8 +21,8 @@ class AdminEntity:
         return resp
     
     @classmethod
-    def create_account_resident(self, data,img_admin,admin_id):
-        resp = register_account_resident(data,img_admin,admin_id)
+    def create_account_resident(self, data,admin_id,backgrountask):
+        resp = register_account_resident(data,admin_id,backgrountask)
         return resp
     
     @classmethod

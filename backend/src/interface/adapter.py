@@ -15,8 +15,8 @@ class FastAPIAdapter:
         return admin_entity.create_admin(data,img_admin)
     
     @classmethod
-    def create_account_resident(self,data,img,id_admin):
-        return admin_entity.create_account_resident(data,img,id_admin)
+    def create_account_resident(self,data,id_admin,backgroundtask):
+        return admin_entity.create_account_resident(data,id_admin,backgroundtask)
     
     @classmethod
     def view_image_admin(self,id_admin):
