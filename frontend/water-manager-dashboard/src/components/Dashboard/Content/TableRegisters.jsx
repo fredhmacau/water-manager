@@ -1,46 +1,64 @@
 import * as React from "react";
 import {
-    ButtonGroup,
-    Flex,
-    IconButton,
-    Table,
-    Tbody,
-    Td,
-    Text,
-    Th,
-    Thead,
-    Tr,
-    useColorModeValue,
-  } from "@chakra-ui/react";
-  import { AiFillEdit } from "react-icons/ai";
-  import {BsFillTrashFill } from "react-icons/bs";
-const TableRegisters=React.memo((props)=>{
-    
-  const header = ["nome","contacto", "adicionado", "acções"];
-  const data = [
-    {
-      name: "Daggy",
-      contacto:945345456,
-      created: "7 days ago",
-    },
-    {
-      name: "Anubra",
-      contacto:945345456,
-      created: "23 hours ago",
-    },
-    {
-      name: "Josef",
-      contacto:945345456,
-      created: "A few seconds ago",
-    },
-    {
-      name: "Sage",
-      contacto:945345456,
-      created: "A few hours ago",
-    },
-  ];
-  const color1 = useColorModeValue("gray.400", "gray.400");
-  const color2 = useColorModeValue("gray.400", "gray.400");
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  Flex,
+  useDisclosure,
+} from "@chakra-ui/react";
+import useHttp from "../../../Hooks/useHttp";
+import { useEffect, useState } from "react";
+import { IconButton } from "@chakra-ui/react";
+import { MdDelete } from "react-icons/md";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  useToast
+} from "@chakra-ui/react";
+const TableRegisters = React.memo((props) => {
+  const [data, setData] = useState([]);
+  const [selectedId, setSelectedId] = useState(null); // adicionado para remover o usuário
+  const { viewAllResidents, removeResident } = useHttp();
+  const toast = useToast()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  function tempoPassadoDesde(data) {
+    const dataAntiga = new Date(data);
+    const dataAtual = new Date();
+    const tempoDecorrido = (dataAtual - dataAntiga) / 1000; // tempo em segundos
+  
+    const dias = Math.round(tempoDecorrido / 86400); // arredonda para o número inteiro mais próximo
+  
+    if (dias === 0) {
+      return "Hoje";
+    } else if (dias === 1) {
+      return "Ontem";
+    } else {
+      return `Passaram-se ${dias} dias`;
+    }
+  }
+  
+  const onRemove = function () {
+  
+    console.log(selectedId)
+  };
+  useEffect(() => {
+    viewAllResidents().then((resp) => {
+      setData([...resp.data]);
+    });
+  }, []);
+
   return (
     <Flex
       w="full"
@@ -48,156 +66,124 @@ const TableRegisters=React.memo((props)=>{
       _dark={{
         bg: "#3e3e3e",
       }}
-       shadon="sm"
-       rounded="lg"
+      shadon="sm"
+      rounded="lg"
       alignItems="center"
       justifyContent="center"
     >
-      <Table
-        w="full"
-        bg="white"
-        _dark={{
-          bg: "gray.800",
-        }}
-        display={{
-          base: "block",
-          md: "table",
-        }}
-        sx={{
-          "@media print": {
-            display: "table",
-          },
-        }}
-      >
-        <Thead
-          display={{
-            base: "none",
-            md: "table-header-group",
-          }}
-          sx={{
-            "@media print": {
-              display: "table-header-group",
-            },
-          }}
-        >
-          <Tr>
-            {header.map((x) => (
-              <Th key={x}>{x}</Th>
-            ))}
-          </Tr>
-        </Thead>
-        <Tbody
-          display={{
-            base: "block",
-            lg: "table-row-group",
-          }}
-          sx={{
-            "@media print": {
-              display: "table-row-group",
-            },
-          }}
-        >
-          {data.map((token, tid) => {
-            return (
-              <Tr
-                key={tid}
-                display={{
-                  base: "grid",
-                  md: "table-row",
-                }}
-                sx={{
-                  "@media print": {
-                    display: "table-row",
-                  },
-                  gridTemplateColumns: "minmax(0px, 35%) minmax(0px, 65%)",
-                  gridGap: "10px",
-                }}
-              >
-                {Object.keys(token).map((x) => {
-                  return (
-                    <React.Fragment key={`${tid}${x}`}>
-                      <Td
-                        
-                        display={{
-                          base: "table-cell",
-                          md: "none",
-                        }}
-                        sx={{
-                          "@media print": {
-                            display: "none",
-                          }}}
-                          
-                      >
-                        <Text transition=".15 ease"
-                        fontFamily="Mulish"
-                        fontStyle="normal"
-                        fontWeight={400}
-                        fontSize="1.2rem"
-                        letterSpacing="0.2"
-                        color="#DDE2FF">
-                            {x}
-                        </Text>
-                   
-                      </Td>
-                      <Td
-                         fontStyle="normal"
-                         px="6"
-                         textTransform="uppercase"
-                         fontFamily="Mulish"
-                         fontWeight="700"
-                         lineHeight="0.9375rem"
-                         fontSize="0.75rem"
-                         letterSpacing="0.3px"
-                         color="#9FA2B4"
-                      >
-                        {token[x]}
-                      </Td>
-                    </React.Fragment>
-                  );
-                })}
-                <Td
-                  display={{
-                    base: "table-cell",
-                    md: "none",
-                  }}
-                  sx={{
-                    "@media print": {
-                      display: "none",
-                    }}}
-                    transition=".15 ease"
+      <TableContainer w="full">
+        <Table variant="striped" colorScheme="blue">
+          <TableCaption>
+            Total de moradores cadastrados: {data.length}
+          </TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Nome</Th>
+              <Th>Contacto</Th>
+              <Th>Email</Th>
+              <Th>Residência</Th>
+              <Th>Adicionado</Th>
+              <Th>Ações</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {data.length > 0 ? (
+              data.map((item, index) => {
+                return (
+                  <Tr
+                    key={index}
                     fontFamily="Mulish"
-                    fontStyle="normal"
-                    fontWeight={400}
-                    fontSize="1.2rem"
-                    letterSpacing="0.2"
-                    color="#DDE2FF"
-                >
-                  Actions
-                </Td>
-                <Td>
-                  <ButtonGroup variant="solid" size="sm" spacing={3}>
-                    
-                    <IconButton
-                      color="#fff"
-                      bg="#08b57d"
-                      icon={<AiFillEdit />}
-                      aria-label="Edit"
-                    />
-                    <IconButton
-                      colorScheme="red"
-                      variant="outline"
-                      icon={<BsFillTrashFill />}
-                      aria-label="Delete"
-                    />
-                  </ButtonGroup>
-                </Td>
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
-   </Flex>
-  );   
-})
+                    fontWeight="500"
+                    lineHeight="0.9375rem"
+                    fontSize="0.9rem"
+                    letterSpacing="0.3px"
+                    color="#252733"
+                  >
+                    <Td>{item.username}</Td>
+                    <Td>{item.contact}</Td>
+                    <Td>{item.email}</Td>
+                    <Td>{item.residence_n}</Td>
+
+                    <Td>{tempoPassadoDesde(item.created_at)}</Td>
+                    <Td>
+                      <Flex>
+                        <IconButton
+                          backgroundColor="tomato"
+                          aria-label="Delete user"
+                          color="#fff"
+                          onClick={() => {
+                            onOpen();
+                            setSelectedId(item.resident_id);
+                          }}
+                          icon={<MdDelete />}
+                        />
+                      </Flex>
+                    </Td>
+                  </Tr>
+                );
+              })
+            ) : (
+              <></>
+            )}
+          </Tbody>
+        </Table>
+      </TableContainer>
+      {selectedId && (
+        <Modal
+          isCentered
+          justifyContent="flex-start"
+          onClose={onClose}
+          isOpen={isOpen}
+          motionPreset="slideInBottom"
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader
+              lineHeight="1.875rem"
+              textAlign="left"
+              letterSpacing="0.3px"
+              fontWeight="700"
+              color="#252733"
+              fontSize="1.5rem"
+              fontFamily="Mulish"
+              fontStyle="normal"
+            >
+              Remover morador
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody fontFamily="Mulish">
+              Desejas remover o morador?
+            </ModalBody>
+            <ModalFooter alignItems="start" justifyContent="flex-start">
+              <Button
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                backgroundColor="tomato"
+                // {#29CC97"}
+                //{"#13ab09"} color
+                variant="ghost"
+                type="submit"
+                boxShadow="0px 4px 12px rgba(55, 81, 255, 0.24)"
+                color="#FFFFFF"
+                lineHeight="1.25rem"
+                fontSize="0.875rem"
+                fontFamily="mulish"
+                fontWeight={600}
+                letterSpacing="0.2px"
+                colorScheme="red"
+                mr={3}
+                onClick={onRemove}
+              >
+                Remover
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      )}
+    </Flex>
+  );
+});
 
 export default TableRegisters;

@@ -21,11 +21,12 @@ const Routers=function (){
             <Routes>
                 <Route path="admin" exact element={<ConditionalAdminIndex animate={true}/>}/>
                 <Route path="admin/overview"  exact element={<ConditionalAdminOverview animate={true}/>} />
-                <Route path="admin/packages"   element={<ConditionalAdminPackages animate={true}/>} />
+                <Route path="admin/payments"   element={<ConditionalAdminPackages animate={true}/>} />
                 <Route path="admin/registers"   element={<ConditionalAdminRegisters animate={true}/>} />
                 <Route path="admin/register"   element={<ConditionalAdminRegisterUser animate={true}/>} />
                 <Route path="admin/login" element={<ConditionalLoginAdmin animate={true}/>} />
                 <Route path="resident/login" element={<ConditionalLoginResident/>}/>
+                <Route path="resident" element={<ConditionalResidentOverview/>}/>
                 <Route path="resident/overview" element={<ConditionalResidentOverview/>}/>
                 <Route path="/" element={<ConditionalResidentOverview/>}/>
                 <Route path="resident/packages"   element={<ConditionalResidentPackages/>} />

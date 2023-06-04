@@ -57,3 +57,7 @@ class FastAPIAdapter:
     @classmethod
     def view_image_resident(self,id_resident):
         return resident_entity.view_image_resident(id_resident)
+    
+    @classmethod
+    async def delete_resident(self,id_resident):
+        return admin_entity.delete_resident(id_resident)

@@ -62,10 +62,14 @@ async def all_pending_payment(token:str=Depends(oauth2)):
     return adapter.get_all_peding_payment()
 
 @admin_route.get("/view_image_payment/{payment_id}",tags=['admin'])
-async def view_image_payment(payment_id:str,token:str=Depends(oauth2)):
-    id_admin=admin_token.get_current_user(token)
+async def view_image_payment(payment_id:str):
+
     return adapter.view_image_payment(payment_id)
 
 @admin_route.put("/review-payment/{payment_id}",tags=['admin'])
 async def review_payment(payment_id,token:str=Depends(oauth2)):
     return adapter.review_payment(payment_id)
+
+@admin_route.delete("/delete-resident/{resident_id}",tags=['admin'])
+async def delete_resident(resident_id:str,token:str=Depends(oauth2)):
+    return await adapter.delete_resident(resident_id)

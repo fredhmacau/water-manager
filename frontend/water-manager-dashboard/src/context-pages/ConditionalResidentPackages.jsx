@@ -2,7 +2,8 @@ import Login from "../pages/Login";
 import { useContext } from "react";
 import AuthContext from "../context/auth-context";
 import { Navigate } from "react-router-dom";
-import Packages from "../pages/Packages";
+import PackagesResident from "../pages/PackagesResident";
+
 
 export default function ConditionalResidentPackages(animate){
     const ctx=useContext(AuthContext);
@@ -14,7 +15,7 @@ export default function ConditionalResidentPackages(animate){
           {
             ctx.isLogin && localStorage.getItem("entity_status")=="resident"?(
                  
-                <Packages/>
+                <PackagesResident/>
             ):
             (
                 <Navigate to="resident/login" replace/>

@@ -7,6 +7,7 @@ from src.cors.usecases.admin import get_all_payments
 from src.cors.usecases.admin import review_in_payment
 from src.cors.usecases.admin import get_all_peding_payments
 from src.cors.usecases.admin import view_image_of_payment
+from src.cors.usecases.admin import delete_resident_in_database
 
 class AdminEntity:
     """_summary_
@@ -58,4 +59,9 @@ class AdminEntity:
     @classmethod
     def view_image_payment(self,payment_id):
         resp=view_image_of_payment(payment_id)
+        return resp
+    
+    @classmethod
+    def delete_resident(self,resident_id):
+        resp=delete_resident_in_database(resident_id)
         return resp

@@ -1,4 +1,4 @@
-import { Flex, HStack, Img, Text  } from "@chakra-ui/react";
+import { Flex, HStack, Img, Text } from "@chakra-ui/react";
 import SidebarContent from "./SidebarContent";
 //icons
 import logo from "../../../assets/logo.png";
@@ -7,11 +7,28 @@ import pacotesIcon from "../../../assets/icons/ticket.png";
 import registersIcon from "../../../assets/icons/registers.png";
 import insertIcon from "../../../assets/icons/insert.png";
 import configIcon from "../../../assets/icons/config.png";
-
+import { SlArrowLeftCircle } from "react-icons/sl";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useToast,
+  useDisclosure,
+  Button
+} from "@chakra-ui/react";
 const NavItemsMobile = function (props) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const logout=function(){
+    localStorage.removeItem("access_token");
+    window.location.reload();
+  }
   return (
     <Flex
-      w={{base:"60%",md:"30%"}}
+      w={{ base: "60%", md: "30%" }}
       pos="fixed"
       h="100vh"
       top="0"
@@ -25,7 +42,59 @@ const NavItemsMobile = function (props) {
       direction="column"
       {...props}
     >
-         <Flex w="full" mt="1rem" ml="-2rem">
+         <Modal
+          isCentered
+          justifyContent="flex-start"
+          onClose={onClose}
+          isOpen={isOpen}
+          motionPreset="slideInBottom"
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader
+              lineHeight="1.875rem"
+              textAlign="left"
+              letterSpacing="0.3px"
+              fontWeight="700"
+              color="#252733"
+              fontSize="1.5rem"
+              fontFamily="Mulish"
+              fontStyle="normal"
+            >
+              Terminar sessão
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody fontFamily="Mulish">
+              Você tem certeza que deseja terminar sua sessão?
+            </ModalBody>
+            <ModalFooter alignItems="start" justifyContent="flex-start">
+              <Button
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+           
+                // {#29CC97"}
+                //{"#13ab09"} color
+                variant="ghost"
+                type="submit"
+                boxShadow="0px 4px 12px rgba(55, 81, 255, 0.24)"
+                color="#FFFFFF"
+                lineHeight="1.25rem"
+                fontSize="0.875rem"
+                fontFamily="mulish"
+                fontWeight={600}
+                letterSpacing="0.2px"
+                backgroundColor="#1b9f0b"
+                mr={3}
+                onClick={logout}
+              >
+                Terminar
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      <Flex w="full" mt="1rem" ml="-2rem">
         <HStack
           spacing="2px"
           w="full"
@@ -47,23 +116,29 @@ const NavItemsMobile = function (props) {
           </Text>
         </HStack>
       </Flex>
-      <Flex w="full" mt="2rem" ml="-2.5rem" direction="column" alignItems="center">
+      <Flex
+        w="full"
+        mt="2rem"
+        ml="-2.5rem"
+        direction="column"
+        alignItems="center"
+      >
         <SidebarContent
           icon={OverviewIcon}
           describe="Início"
           link="/admin/overview"
           _hover={{
-            borderLeft:"2px solid #DDE2FF",
-            bg:"#9FA2B4"
+            borderLeft: "2px solid #DDE2FF",
+            bg: "#9FA2B4",
           }}
         />
         <SidebarContent
           icon={pacotesIcon}
-          link="/admin/packages"
-          describe="Pacotes"
+          link="/admin/payments"
+          describe="Pagamentos"
           _hover={{
-            borderLeft:"2px solid #DDE2FF",
-            bg:"#9FA2B4"
+            borderLeft: "2px solid #DDE2FF",
+            bg: "#9FA2B4",
           }}
         />
         <SidebarContent
@@ -71,31 +146,50 @@ const NavItemsMobile = function (props) {
           describe="Registrados"
           link="/admin/registers"
           _hover={{
-            borderLeft:"2px solid #DDE2FF",
-            bg:"#9FA2B4"
+            borderLeft: "2px solid #DDE2FF",
+            bg: "#9FA2B4",
           }}
-
         />
         <SidebarContent
           icon={insertIcon}
           describe="Cadastrar"
           link="/admin/register"
           _hover={{
-            borderLeft:"2px solid #DDE2FF",
-            bg:"#9FA2B4"
+            borderLeft: "2px solid #DDE2FF",
+            bg: "#9FA2B4",
           }}
-          
         />
         <SidebarContent
           icon={configIcon}
           describe="Configurações"
           link="/admin/packages"
           _hover={{
-            borderLeft:"2px solid #DDE2FF",
-            bg:"#9FA2B4"
+            borderLeft: "2px solid #DDE2FF",
+            bg: "#9FA2B4",
           }}
-          
         />
+        <Flex
+          w="full"
+          align="center"
+          px="3rem"
+          py="3"
+          cursor="pointer"
+          role="group"
+          transition=".15 ease"
+          fontFamily="Mulish"
+          fontStyle="normal"
+          onClick={logout}
+          fontWeight={400}
+          fontSize="1rem"
+          letterSpacing="0.2"
+          color=" #DDE2FF"
+          opacity="0.7"
+        >
+          <Flex mx="4" boxSize="4" w="1rem" h="1rem">
+            <SlArrowLeftCircle />
+          </Flex>
+          Sair
+        </Flex>
       </Flex>
     </Flex>
   );

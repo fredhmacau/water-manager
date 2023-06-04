@@ -12,53 +12,55 @@ import {
   VStack,
   Alert,
   AlertIcon,
+  useToast
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import useHttp from "../../../Hooks/useHttp";
-import { useState } from "react";
 const InsertForm = React.memo((props) => {
+  const {insertResident}=useHttp();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm();
-  const { insertResident } = useHttp();
+  
   const [alertError, setAlertError] = React.useState({
     errorMessage: "",
     isError: false,
   });
-  const [registerSuccess, setRegisterSuccess] = useState(false);
 
+  const toast = useToast()
   
   const onRegisterUser = async function (values) {
-
-    const response=insertResident(values)
-      await response.then((resp) => {
-        if (resp.status == 201) {
-          setAlertError({ errorMessage: "", isError: false });
-          setRegisterSuccess(true);
-        }
-      })
-      .catch((error) => {
-        setRegisterSuccess(false);
-        const errorMessage =
-          error["response"]["data"]["msg"] != undefined
-            ? error["response"]["data"]["msg"]
-            : error["response"]["data"]["detail"];
-
-        setAlertError({ errorMessage: `${errorMessage}`, isError: true });
-      });
+    insertResident(values)
+    .then((resp) => {
+      if (resp.status == 201) {
+        setAlertError({ errorMessage: "", isError: false });
+        toast({
+          position: "top",
+          title: 'Morador adicionado!',
+          description: "O morador foi cadastrado com sucesso.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
+      }
+    })
+    .catch((error) => {
+      const errorMessage = error["response"]["data"]["msg"] != undefined
+      ? error["response"]["data"]["msg"]
+      : error["response"]["data"]["detail"];
+      setAlertError({ errorMessage: `${errorMessage}`, isError: true });
+    });
   };
   const onClose=function(){
     setAlertError({errorMessage:"",isError:false})
-    setRegisterSuccess(false)
     redirect("/agents",{replace:true})
   }
   return (
     <chakra.form
       w="full"
       mt="5"
-      method="POST"
       shadow="base"
       rounded={[null, "md"]}
       overflow={{
@@ -66,71 +68,11 @@ const InsertForm = React.memo((props) => {
       }}
       onSubmit={handleSubmit(onRegisterUser)}
     >
-      {registerSuccess && (
-        <AlertDialog
-          motionPreset="slideInBottom"
-          onClose={onClose}
-          isOpen={registerSuccess && true}
-          isCentered
-        >
-          <AlertDialogOverlay />
-
-          <AlertDialogContent>
-            <AlertDialogHeader
-              pt="1rem"
-              fontFamily="poppinsMedium"
-              lineHeight="1.875rem"
-              textAlign="center"
-              letterSpacing="0.3px"
-              fontWeight="700"
-              color="#252733"
-              fontSize="1.3rem"
-              fontStyle="normal"
-            >
-              Registro efetuado com sucesso
-            </AlertDialogHeader>
-
-            <AlertDialogBody
-              pt="1rem"
-              fontFamily="poppinsLight"
-              lineHeight="1.875rem"
-              textAlign="center"
-              letterSpacing="0.3px"
-              fontWeight="500"
-              color="#252733"
-              fontSize="1rem"
-              fontStyle="normal"
-            >O registro do morador no sistema foi efetuado com sucesso.
-            </AlertDialogBody>
-            <AlertDialogFooter>
-              <ChakraButton
-                onClick={onClose}
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                justifyContent="center"
-                backgroundColor="#ACC960"
-                // {"#0b1e9f#3751FF"}
-                //{"#13ab09"} color
-                variant="ghost"
-                boxShadow="0px 4px 12px rgba(55, 81, 255, 0.24)"
-                color="#FFFFFF"
-                _hover={{ color: "#ffffff", backgroundColor: "0095A8" }}
-                lineHeight="1.25rem"
-                fontSize="0.875rem"
-                fontFamily="poppinsMedium"
-                fontWeight={500}
-                letterSpacing="0.2px" ml={3}>
-                OK
-              </ChakraButton>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      )}
+    
       {alertError.isError ? (
-        <Alert status="error">
+        <Alert status="error" fontFamily="mulish" color="#4B506D">
           <AlertIcon />
-          {alert.errorMessage}
+          {alertError.errorMessage}
         </Alert>
       ) : (
         <></>
@@ -391,6 +333,11 @@ const InsertForm = React.memo((props) => {
                 type="text"
                 borderColor="#cbd5e0a3"
                 borderRadius="8px"
+                {
+                  ...register("residence_n", {
+                    required: "Campo obrigatório preenche correctamente",
+                  })
+                }
               />
               <FormErrorMessage>
                 {errors.residence_n && errors.residence_n.message}

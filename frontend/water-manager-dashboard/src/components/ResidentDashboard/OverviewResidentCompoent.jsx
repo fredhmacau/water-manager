@@ -14,9 +14,94 @@ import {
   } from "@chakra-ui/react";
   import * as React from "react";
   import { Chart } from "react-google-charts";
-
+import { useState , useEffect} from "react";
+import useHttp from "../../Hooks/useHttp";
+import { Spinner } from "@chakra-ui/react";
+import {GiPayMoney} from "react-icons/gi"
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+  Line,
+} from "recharts";
+import {TbDevicesPc, TbReportMoney, TbUsers} from "react-icons/tb"
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
   const OverviewComponentResident = React.memo((props) => {
+    const [residentInfo, setResidentInfo] = useState({});
+    const { viewInfoResident } = useHttp();
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+      viewInfoResident(localStorage.getItem("access_token"))
+        .then((resp) => {
+          setResidentInfo({ ...resp.data });
+          setLoading(false);
+        })
+        .catch((err) => setLoading(true));
+    }, []);
+    const data = [
+      {
+        name: "Page A",
+        uv: 4000,
+        pv: 2400,
+        amt: 2400,
+      },
+      {
+        name: "Page B",
+        uv: 3000,
+        pv: 1398,
+        amt: 2210,
+      },
+      {
+        name: "Page C",
+        uv: 2000,
+        pv: 9800,
+        amt: 2290,
+      },
+      {
+        name: "Page D",
+        uv: 2780,
+        pv: 3908,
+        amt: 2000,
+      },
+      {
+        name: "Page E",
+        uv: 1890,
+        pv: 4800,
+        amt: 2181,
+      },
+      {
+        name: "Page F",
+        uv: 2390,
+        pv: 3800,
+        amt: 2500,
+      },
+      {
+        name: "Page G",
+        uv: 3490,
+        pv: 4300,
+        amt: 2100,
+      },
+    ];
     return (
+      <>
+       {loading ? (
+        <Flex
+          w="full"
+          h="100vh"
+          mt="6rem"
+          align="center"
+          justifyContent="center"
+        >
+          <Spinner size="xl" />
+        </Flex>
+      ) : (
+        
+      
       <Flex bg="#F7F8FC" minH="850px" {...props}>
         <Flex w="full" mt="2rem" >
           <HStack spacing="2px" w="full" px="4" justifyContent="space-between">
@@ -43,11 +128,13 @@ import {
                 lineHeight="20px"
                 opacity="0.7"
               >
-                Isaac Macau
+                {residentInfo["info_resident"]["username"]}
               </Text>
               <Wrap mt={{ base: "0", lg: "-1.5" }} ml="2">
                 <WrapItem>
-                  <Avatar size="sm" bg="blue.300" name="isaac antónio" />
+                  <Avatar  src={`http://127.0.0.1:8000/v1.0/admin/resident/view_image_resident/${localStorage.getItem(
+                        "access_token"
+                      )}`} size="sm" bg="blue.300" name={residentInfo["info_resident"]["username"]} />
                 </WrapItem>
               </Wrap>
             </Flex>
@@ -75,30 +162,39 @@ import {
               border="1px solid #DFE0EB"
               rounded="md"
             >
-              <VStack spacing="1.5rem">
-                <Text
-                  fontFamily="Mulish"
-                  fontSize="1rem"
-                  fontWeight={600}
-                  lineHeight="24px"
-                  fontStyle="normal"
-                  letterSpacing="0.4px"
-                  color="#9FA2B4"
-                >
-                  Pagamentos realizados
-                </Text>
-                <Text
-                  fontFamily="Mulish"
-                  fontSize="2rem"
-                  fontWeight={700}
-                  lineHeight="24px"
-                  fontStyle="normal"
-                  letterSpacing="1px"
-                  color=" #252733"
-                >
-                  60
-                </Text>
-              </VStack>
+              <HStack w="full" h="full">
+                <Box display="flex" justifyContent="center" alignItems="center" w="25%" bg="#0b1e9f" h="100%">
+                  <GiPayMoney fontSize="2rem" color="#fff"/>
+                  
+                </Box>
+                <VStack spacing="1.5rem" w="full" display="flex"       alignItems="flex-end">
+                
+                  <Text
+                    fontFamily="Mulish"
+                    fontSize="1rem"
+                    fontWeight={600}
+                    lineHeight="24px"
+                    fontStyle="normal"
+                    px="4"
+                    letterSpacing="0.4px"
+                    color="#9FA2B4"
+                  >
+                    Pagamentos realizados
+                  </Text>
+                  <Text
+                    fontFamily="Mulish"
+                    fontSize="2rem"
+                    fontWeight={700}
+                    lineHeight="24px"
+                    fontStyle="normal"
+                    px="4"
+                    letterSpacing="1px"
+                    color=" #252733"
+                  >
+                    {residentInfo["all_payments"]}
+                  </Text>
+                </VStack>
+                    </HStack>
             </Box>
             <Box
               bg="white"
@@ -111,236 +207,181 @@ import {
               rounded="md"
               cursor="pointer"
             >
-              <VStack spacing="1.5rem">
-                <Text
-                  fontFamily="Mulish"
-                  fontSize="1rem"
-                  fontWeight={600}
-                  lineHeight="24px"
-                  fontStyle="normal"
-                  letterSpacing="0.4px"
-                  color="#9FA2B4"
-                >
-                  Pagamentos pendentes
-                </Text>
-                <Text
-                  fontFamily="Mulish"
-                  fontSize="2rem"
-                  fontWeight={700}
-                  lineHeight="24px"
-                  fontStyle="normal"
-                  letterSpacing="1px"
-                  color=" #252733"
-                >
-                  12
-                </Text>
-              </VStack>
+              <HStack w="full" h="full">
+                <Box display="flex" justifyContent="center" alignItems="center" w="25%" bg="#e1a214" h="100%">
+                  <TbReportMoney fontSize="2rem" color="#fff"/>
+                  
+                </Box>
+                <VStack spacing="1.5rem" w="full" display="flex"       alignItems="flex-end">
+                
+                  <Text
+                    fontFamily="Mulish"
+                    fontSize="1rem"
+                    fontWeight={600}
+                    lineHeight="24px"
+                    fontStyle="normal"
+                    px="4"
+                    letterSpacing="0.4px"
+                    color="#9FA2B4"
+                  >
+                    Pagamentos não validados
+                  </Text>
+                  <Text
+                    fontFamily="Mulish"
+                    fontSize="2rem"
+                    fontWeight={700}
+                    lineHeight="24px"
+                    fontStyle="normal"
+                    px="4"
+                    letterSpacing="1px"
+                    color=" #252733"
+                  >
+                    {residentInfo["all_payments"]}
+                  </Text>
+                </VStack>
+                    </HStack>
             </Box>
             
            
           </SimpleGrid>
         </Flex>
-        <Flex w="full" display={{base:"none",lg:"flex"}} px="4" mt="3rem">
-          <Grid
-            w="full"
+         <Tabs padding="4"
+            mt={{ base: "auto", lg: "3rem" }}
             h="400px"
-            templateRows="repeat (2,1fr)"
-            templateColumns="repeat(4,1fr)"
+            w="full"
           >
-            <GridItem
-              rounded="md"
-              w="full"
-              h="full"
-              fontFamily="Mulish"
-              fontSize="1rem"
-              fontWeight={600}
-              lineHeight="24px"
-              fontStyle="normal"
-              letterSpacing="0.4px"
-              color="#9FA2B4"
-              colSpan={3}
-              py="4"
-            >
-              <Chart
-                chartType="LineChart"
-                width="100%"
-                height="400px"
-                loader={<div>Loading Chart</div>}
-                data={[
-                  ["Year", "litros"],
-                  ["2010", 1000],
-                  ["2011", 1170],
-                  ["2012", 660],
-                  ["2013", 1030],
-                ]}
-                options={{
-                  title: "Consumo total",
-                  curveType: "function",
-                  legend: { position: "top right" },
-                }}
-                rootProps={{ "data-testid": "1" }}
-                style={{ fontFamily: "Mulish", color: "#9FA2B4" }}
-              />
-            </GridItem>
-            <GridItem
-              w="full"
-              display={{ base: "none", lg: "flex" }}
-              justifyContent="center"
-              alignItems="center"
-              colSpan={1}
-            >
-              <Stack
-                direction={{ base: "row", lg: "column" }}
-                borderLeft="1px solid #DFE0EB"
-                h="auto"
-                spacing="4px"
-                w="full"
+            <TabList>
+              <Tab
+                fontFamily="Mulish"
+                lineHeight="1.875rem"
+                textAlign="center"
+                letterSpacing="0.3px"
+                fontWeight="600"
+                color="#252733"
+                fontSize="1rem"
+                fontStyle="normal"
               >
-                <Flex
-                  p="4"
-                  w="full"
-                  h="6.03rem"
-                  justifyContent="center"
-                  alignItems="center"
-                  
-                  bg="white"
-                  direction="column"
-                >
-                  <Text
-                    fontFamily="Mulish"
-                    fontSize="1rem"
-                    fontWeight={600}
-                    lineHeight="22px"
-                    fontStyle="normal"
-                    letterSpacing="0.3px"
-                    textAlign="center"
-                    color="#9FA2B4"
+                Diario
+              </Tab>
+              <Tab
+                fontFamily="Mulish"
+                lineHeight="1.875rem"
+                textAlign="center"
+                letterSpacing="0.3px"
+                fontWeight="600"
+                color="#252733"
+                fontSize="1rem"
+                fontStyle="normal"
+              >
+                Mensal
+              </Tab>
+              
+            </TabList>
+
+            <TabPanels w="full" h="100%">
+              {/* diario */}
+              <TabPanel w="100%" h="100%">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart
+                    width={"100%"}
+                    height={"100%"}
+                    data={data}
+                    
+                    margin={{
+                      top: 10,
+                      right: 30,
+                      left: 0,
+                      bottom: 0,
+                    }}
                   >
-                    Total de litros consumidos
-                  </Text>
-                  <Text
-                    fontFamily="Mulish"
-                    fontSize="1.4rem"
-                    mt="1rem"
-                    fontWeight={700}
-                    lineHeight="24px"
-                    fontStyle="normal"
-                    letterSpacing="1px"
-                    color=" #252733"
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Area
+                    style={{
+                     
+                      backgroundColor: "white",
+                    }}
+                      type="monotone"
+                      dataKey="uv"
+                      stroke="#8884d8"
+                      fill="#8884d8"
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="uv"
+                      stroke="#8884d8"
+                      
+                      fillOpacity={1} 
+                      fill="url(#colorUv)"
+                    />
+                    <Legend verticalAlign="top" height={36} />
+
+                    <Line
+                      name="consumo total"
+                      type="monotone"
+                      dataKey="consumo total"
+                      stroke="#82ca9d"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </TabPanel>
+              {/* diario */}
+              <TabPanel w="100%" h="100%">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart
+                    width={"100%"}
+                    height={"100%"}
+                    data={data}
+                    
+                    margin={{
+                      top: 10,
+                      right: 30,
+                      left: 0,
+                      bottom: 0,
+                    }}
                   >
-                    150L
-                  </Text>
-                </Flex>
-                <Flex
-                  p="4"
-                  w="full"
-                  h="6.03rem"
-                  
-                  bg="white"
-                  direction="column"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Text
-                    fontFamily="Mulish"
-                    fontSize="1rem"
-                    fontWeight={600}
-                    lineHeight="22px"
-                    fontStyle="normal"
-                    letterSpacing="0.3px"
-                    textAlign="center"
-                    color="#9FA2B4"
-                  >
-                    Tempo de actividade
-                  </Text>
-                  <Text
-                    fontFamily="Mulish"
-                    fontSize="1.4rem"
-                    mt="1rem"
-                    fontWeight={700}
-                    lineHeight="24px"
-                    fontStyle="normal"
-                    letterSpacing="1px"
-                    color=" #252733"
-                  >
-                    4m
-                  </Text>
-                </Flex>
-                <Flex
-                  p="4"
-                  w="full"
-                  h="6.03rem"
-                 
-                  bg="white"
-                  direction="column"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Text
-                    fontFamily="Mulish"
-                    fontSize="1rem"
-                    fontWeight={600}
-                    lineHeight="22px"
-                    fontStyle="normal"
-                    letterSpacing="0.3px"
-                    textAlign="center"
-                    color="#9FA2B4"
-                  >
-                    Registros recentes
-                  </Text>
-                  <Text
-                    fontFamily="Mulish"
-                    fontSize="1.4rem"
-                    mt="1rem"
-                    fontWeight={700}
-                    lineHeight="24px"
-                    fontStyle="normal"
-                    letterSpacing="1px"
-                    color=" #252733"
-                  >
-                    6
-                  </Text>
-                </Flex>
-                <Flex
-                  p="4"
-                  w="full"
-                  h="6.03rem"
-                  bg="white"
-                  direction="column"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Text
-                    fontFamily="Mulish"
-                    fontSize="1rem"
-                    fontWeight={600}
-                    lineHeight="22px"
-                    fontStyle="normal"
-                    letterSpacing="0.3px"
-                    textAlign="center"
-                    color="#9FA2B4"
-                  >
-                    Pacotes recentes
-                  </Text>
-                  <Text
-                    fontFamily="Mulish"
-                    fontSize="1.4rem"
-                    mt="1rem"
-                    fontWeight={700}
-                    lineHeight="24px"
-                    fontStyle="normal"
-                    letterSpacing="1px"
-                    color=" #252733"
-                  >
-                    1
-                  </Text>
-                </Flex>
-              </Stack>
-            </GridItem>
-          </Grid>
-        </Flex>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Area
+                    style={{
+                     
+                      backgroundColor: "white",
+                    }}
+                      type="monotone"
+                      dataKey="uv"
+                      stroke="#8884d8"
+                      fill="#8884d8"
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="uv"
+                      stroke="#8884d8"
+                      
+                      fillOpacity={1} 
+                      fill="url(#colorUv)"
+                    />
+                    <Legend verticalAlign="top" height={36} />
+
+                    <Line
+                      name="consumo total"
+                      type="monotone"
+                      dataKey="consumo total"
+                      stroke="#82ca9d"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </TabPanel>
+              </TabPanels>
+              </Tabs>
+
       </Flex>
-    );
+  )
+              } 
+  </>  );
   });
   
   export default OverviewComponentResident;

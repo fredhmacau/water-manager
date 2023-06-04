@@ -14,9 +14,28 @@ import {
   } from "@chakra-ui/react";
   import * as React from "react";
 import InsertForm from "./InsertForm";
+import useHttp from "../../../Hooks/useHttp";
+import { useState,useEffect } from "react";
   const RegisterUserComponent = React.memo((props) => {
+    const [adminInfo,setAdminInfo]=useState({})
+    const {getAdminInfo}=useHttp();
+    const [loading, setLoading] = useState(true);
+    useEffect(()=>{
+      getAdminInfo(localStorage.getItem("access_token"))
+        .then((resp)=>{
+          
+          setAdminInfo({...resp.data})
+          setLoading(false);
+        }).catch((err) => setLoading(true));
+      }
+    ,[])
     return (
-      <Flex bg="#F7F8FC" minH="850px" {...props}>
+     <>
+     {
+      loading?(
+        <Text>Carregando...</Text>
+      ):(
+        <Flex bg="#F7F8FC" minH="850px" {...props}>
         <Flex w="full" mt="2rem" >
           <HStack spacing="2px" w="full" px="4" justifyContent="space-between">
             <Text
@@ -42,11 +61,11 @@ import InsertForm from "./InsertForm";
                 lineHeight="20px"
                 opacity="0.7"
               >
-                Isaac António
+               {adminInfo["info_admin"]["username"]}
               </Text>
               <Wrap mt={{ base: "0", lg: "-1.5" }} ml="2">
                 <WrapItem>
-                  <Avatar size="sm" bg="blue.300" name="isaac antónio" />
+                  <Avatar src={`http://127.0.0.1:8000/v1.0/admin/view_image_admin/${localStorage.getItem("access_token")}`}  size="sm" bg="blue.300" name="isaac antónio" />
                 </WrapItem>
               </Wrap>
             </Flex>
@@ -56,6 +75,9 @@ import InsertForm from "./InsertForm";
           <InsertForm/>
         </Flex>
       </Flex>
+      )
+     }
+     </>
     );
   });
   

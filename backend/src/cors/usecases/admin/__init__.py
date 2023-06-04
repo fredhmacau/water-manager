@@ -7,3 +7,4 @@ from .get_payments import get_all_payments
 from .review_payment import review_in_payment
 from .get_peding_payment import get_all_peding_payments
 from .get_payment_img import view_image_of_payment
+from .delete_resident import delete_resident_in_database
