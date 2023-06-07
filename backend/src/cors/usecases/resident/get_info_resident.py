@@ -9,7 +9,7 @@ msresponse=MSResponse
 def get_all_info_resident(resident_id):
     try:
         with create_session as session:
-            statement = select(Resident.resident_id,Resident.username).where(Resident.resident_id == "%s" % (resident_id))
+            statement = select(Resident.resident_id,Resident.username,Resident.status_payment).where(Resident.resident_id == "%s" % (resident_id))
             
             result=session.exec(statement).one()
             all_payment=session.exec(select(Payment).where(Payment.resident_id==resident_id)).all()

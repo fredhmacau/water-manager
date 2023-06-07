@@ -16,6 +16,7 @@ import {
   FormLabel,
   Wrap,
   WrapItem,
+  useToast
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
@@ -25,7 +26,7 @@ import PackageItem from "../Dashboard/Content/PackageItem";
 import tester1 from "../../assets/erda-estremera-eMX1aIAp9Nw-unsplash (1).jpg";
 import tester2 from "../../assets/oppo-find-x5-pro-3orZREf1vgc-unsplash.jpg";
 import tester3 from "../../assets/osarugue-igbinoba-4ardiyvfhTM-unsplash.jpg";
-import { useForm,Controller} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Select } from "@chakra-ui/react";
 const PackagesResidentComponent = React.memo((props) => {
   const [residentInfo, setResidentInfo] = useState({});
@@ -35,15 +36,37 @@ const PackagesResidentComponent = React.memo((props) => {
     control,
     formState: { errors, isSubmitting },
   } = useForm();
-  const { viewInfoResident } = useHttp();
+  const { viewInfoResident, registerPayment } = useHttp();
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
-
+  const toast = useToast()
   const handleImageChange = (event) => {
-    setSelectedImage(event.target.files[0]);
+    
   };
-  const onRegisterPayment = (data) => {
-    console.log(data);
+  const onRegisterPayment = async (data) => {
+    registerPayment(data.package_name,data.file)
+    .then((resp)=>{
+      if (resp.status==201) {
+        toast({
+          position: "top",
+          title: 'Pagamento carregado!',
+          description: "O pagamento está sendo processado.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
+      }
+    })
+    .catch((error)=>{
+      toast({
+        position: "top",
+        title: 'Ocorreu um erro!',
+        description: `Tente novamente mais tarde.${error}`,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+    })
   };
   useEffect(() => {
     viewInfoResident(localStorage.getItem("access_token"))
@@ -225,8 +248,21 @@ const PackagesResidentComponent = React.memo((props) => {
                       control={control}
                       rules={{ required: true }}
                       render={({ field }) => (
-                        <input
+                        <Input
                           type="file"
+                          id="password"
+                          sx={{ backgroundColor: "#FCFDFE" }}
+                          pt="0.4rem"
+                          color="#4B506D"
+                          accept="image/*"
+                          lineHeight="1.25rem"
+                          fontSize="0.875rem"
+                          fontFamily="mulish"
+                          letterSpacing="0.3px"
+                          placeholder="Insirir senha"
+                          border="2px"
+                          borderColor="#cbd5e0a3"
+                          borderRadius="8px"
                           onChange={(e) => field.onChange(e.target.files[0])}
                         />
                       )}
@@ -236,6 +272,7 @@ const PackagesResidentComponent = React.memo((props) => {
                   <FormControl w="full" mt="1rem">
                     <Button
                       w="md"
+                      isLoading={isSubmitting}
                       display="flex"
                       flexDirection="column"
                       alignItems="center"

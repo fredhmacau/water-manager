@@ -21,7 +21,7 @@ class Resident(SQLModel, table=True):
                        max_length=100)
     contact: int = Field(default=None, nullable=False, unique=True)
     password: str = Field(default=None, nullable=False)
-    residence_n: int = Field(default=None, nullable=False)
+    residence_n: int = Field(default=None, nullable=False,unique=True)
     img: Optional[bytes] = Field(nullable=True,
                                  default=None,
                                  sa_column=sa.Column(sa.LargeBinary))

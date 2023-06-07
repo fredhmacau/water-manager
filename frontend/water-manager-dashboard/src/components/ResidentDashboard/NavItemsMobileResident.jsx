@@ -1,4 +1,4 @@
-import { Flex, HStack, Img, Text  } from "@chakra-ui/react";
+import { Flex, HStack, Img, Text,  useDisclosure,  } from "@chakra-ui/react";
 import SidebarContentResident from "./SidebarContentResident";
 //icons
 import logo from "../../assets/logo.png";
@@ -7,8 +7,25 @@ import pacotesIcon from "../../assets/icons/ticket.png";
 import registersIcon from "../../assets/icons/registers.png";
 import insertIcon from "../../assets/icons/insert.png";
 import configIcon from "../../assets/icons/config.png";
+import { SlArrowLeftCircle } from "react-icons/sl";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useToast,
 
+  Button
+} from "@chakra-ui/react";
 const NavItemsMobileResident = function (props) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const logout=function(){
+    localStorage.removeItem("access_token");
+    window.location.reload();
+  }
   return (
     <Flex
       w={{base:"60%",md:"30%"}}
@@ -97,6 +114,80 @@ const NavItemsMobileResident = function (props) {
           
         />
       </Flex>
+      <Modal
+          isCentered
+          justifyContent="flex-start"
+          onClose={onClose}
+          isOpen={isOpen}
+          motionPreset="slideInBottom"
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader
+              lineHeight="1.875rem"
+              textAlign="left"
+              letterSpacing="0.3px"
+              fontWeight="700"
+              color="#252733"
+              fontSize="1.5rem"
+              fontFamily="Mulish"
+              fontStyle="normal"
+            >
+              Terminar sessão
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody fontFamily="Mulish">
+              Você tem certeza que deseja terminar sua sessão?
+            </ModalBody>
+            <ModalFooter alignItems="start" justifyContent="flex-start">
+              <Button
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+           
+                // {#29CC97"}
+                //{"#13ab09"} color
+                variant="ghost"
+                type="submit"
+                boxShadow="0px 4px 12px rgba(55, 81, 255, 0.24)"
+                color="#FFFFFF"
+                lineHeight="1.25rem"
+                fontSize="0.875rem"
+                fontFamily="mulish"
+                fontWeight={600}
+                letterSpacing="0.2px"
+                backgroundColor="#1b9f0b"
+                mr={3}
+                onClick={logout}
+              >
+                Terminar
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      <Flex
+          w="full"
+          align="center"
+          px="3rem"
+          py="3"
+          cursor="pointer"
+          role="group"
+          transition=".15 ease"
+          fontFamily="Mulish"
+          fontStyle="normal"
+          onClick={onOpen}
+          fontWeight={400}
+          fontSize="1rem"
+          letterSpacing="0.2"
+          color=" #DDE2FF"
+          opacity="0.7"
+        >
+          <Flex mx="4" boxSize="4" w="1rem" h="1rem">
+            <SlArrowLeftCircle />
+          </Flex>
+          Sair
+        </Flex>
     </Flex>
   );
 };

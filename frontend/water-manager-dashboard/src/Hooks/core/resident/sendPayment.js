@@ -7,7 +7,7 @@ export default async function sendPayment(package_name,img) {
 
   const form=new FormData();
   form.append("package_name",package_name);
-  form.append("image",img.target.files[0]);
+  form.append("image",img);
   const formHeaders=form.getHeaders;
   
     const result =await instance.post("/resident/register-payment",form , {

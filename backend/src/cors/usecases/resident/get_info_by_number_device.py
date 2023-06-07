@@ -7,7 +7,7 @@ from src.infra.feedback import MSResponse
 def get_all_info_by_number_device(number_device):
     try:
         with create_session as transation:
-            last_payment=transation.exec(select(Resident.resident_id,Resident.residence_n,Payment.status,Payment.package_name).where(Resident.residence_n==number_device).order_by(Payment.payment_id.desc()).limit(1)).first()
+            last_payment=transation.exec(select(Resident.resident_id,Resident.residence_n,Resident.status_payment,Payment.package_name).where(Resident.residence_n==number_device).order_by(Payment.payment_id.desc()).limit(1)).first()
             
             if last_payment:
 

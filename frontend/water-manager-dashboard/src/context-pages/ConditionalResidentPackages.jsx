@@ -18,7 +18,7 @@ export default function ConditionalResidentPackages(animate){
                 <PackagesResident/>
             ):
             (
-                <Navigate to="resident/login" replace/>
+                <Navigate to="/resident/login" replace/>
             )
         }
       </>

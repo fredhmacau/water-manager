@@ -81,7 +81,7 @@ const PackagesComponent = React.memo((props) => {
     toast({
       position: "top",
       title: 'Erro!',
-      description: "Ocorreu um erro ao validar o pagamento.",
+      description: `Ocorreu um erro ao validar o pagamento.${error}`,
       status: 'error',
       duration: 9000,
 

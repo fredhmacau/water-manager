@@ -51,7 +51,31 @@ const TableRegisters = React.memo((props) => {
   
   const onRemove = function () {
   
-    console.log(selectedId)
+    removeResident(selectedId)
+    .then((resp)=>{
+      if(resp.status==200){
+        toast({
+          position: "top",
+          title: 'Pagamento validado!',
+          description: "O morador foi eliminado com sucesso.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
+      }
+
+    })
+    .catch((error)=>{
+      toast({
+        position: "top",
+        title: 'Erro!',
+        description: `Ocorreu um erro ao remover morador.${error}`,
+        status: 'error',
+        duration: 9000,
+  
+        isClosable: true,
+      })
+    })
   };
   useEffect(() => {
     viewAllResidents().then((resp) => {

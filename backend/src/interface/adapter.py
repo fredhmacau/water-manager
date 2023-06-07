@@ -65,3 +65,10 @@ class FastAPIAdapter:
     @classmethod
     async def get_info_by_number_device(self,number_device:int)->dict:
         return resident_entity.get_info_by_number_device(number_device)
+
+    @classmethod
+    async def send_message_finish_package(self,resident_id):
+        return resident_entity.send_message_finish_package(resident_id)
+    @classmethod
+    async def send_volume_and_fluxo(self,number_device,data):
+        return resident_entity.send_volume_and_fluxo(number_device,data)
