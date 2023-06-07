@@ -35,7 +35,3 @@ async def get_info_resident(token:str=Depends(oauth2)):
 async def view_image_resident(token:str):
     resident_id=resident_token.get_current_user(token)
     return adapter.view_image_resident(resident_id)
-
-@resident_route.get("/get_info_resident/{number_device}",tags=['resident'])
-async def get_info_resident_by_number_device(number_device:int):
-    return await adapter.get_info_by_number_device(number_device)

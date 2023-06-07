@@ -61,7 +61,3 @@ class FastAPIAdapter:
     @classmethod
     async def delete_resident(self,id_resident):
         return admin_entity.delete_resident(id_resident)
-    
-    @classmethod
-    async def get_info_by_number_device(self,number_device:int)->dict:
-        return resident_entity.get_info_by_number_device(number_device)
