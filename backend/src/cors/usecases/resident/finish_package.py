@@ -16,23 +16,7 @@ def send_message_for_finish_package(number_device):
                 transation.add(update_resident)
                 transation.commit()
                 transation.refresh(update_resident)
-                # 
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
+                sender_message.sender_sms_finish(update_resident.username,update_resident.package_name,update_resident.contact)
                 return MSResponse.msg_ok("ok")
             else:
                 raise MSResponse.msg_request_bad("device not found")
