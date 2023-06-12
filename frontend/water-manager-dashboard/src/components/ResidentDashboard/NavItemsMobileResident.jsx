@@ -42,6 +42,7 @@ const NavItemsMobileResident = function (props) {
       direction="column"
       {...props}
     >
+      
          <Flex w="full" mt="1rem" ml="-2rem">
         <HStack
           spacing="2px"
@@ -65,10 +66,10 @@ const NavItemsMobileResident = function (props) {
         </HStack>
       </Flex>
       <Flex w="full" mt="2rem" ml="-2.5rem" direction="column" alignItems="center">
-        <SidebarContentResident
+      <SidebarContentResident
           icon={OverviewIcon}
+          link="/resident/overview"
           describe="Início"
-          link="/admin/overview"
           _hover={{
             borderLeft:"2px solid #DDE2FF",
             bg:"#9FA2B4"
@@ -76,43 +77,36 @@ const NavItemsMobileResident = function (props) {
         />
         <SidebarContentResident
           icon={pacotesIcon}
-          link="/admin/packages"
           describe="Pacotes"
+          link="/resident/packages"
           _hover={{
             borderLeft:"2px solid #DDE2FF",
             bg:"#9FA2B4"
           }}
         />
-        <SidebarContentResident
-          icon={registersIcon}
-          describe="Registrados"
-          link="/admin/registers"
-          _hover={{
-            borderLeft:"2px solid #DDE2FF",
-            bg:"#9FA2B4"
-          }}
-
-        />
-        <SidebarContentResident
-          icon={insertIcon}
-          describe="Cadastrar"
-          link="/admin/register"
-          _hover={{
-            borderLeft:"2px solid #DDE2FF",
-            bg:"#9FA2B4"
-          }}
-          
-        />
-        <SidebarContentResident
-          icon={configIcon}
-          describe="Configurações"
-          link="/admin/packages"
-          _hover={{
-            borderLeft:"2px solid #DDE2FF",
-            bg:"#9FA2B4"
-          }}
-          
-        />
+        <Flex
+          w="full"
+          align="center"
+          px="3rem"
+          py="3"
+          cursor="pointer"
+          role="group"
+          transition=".15 ease"
+          fontFamily="Mulish"
+          fontStyle="normal"
+          onClick={onOpen}
+          fontWeight={400}
+          fontSize="1rem"
+          letterSpacing="0.2"
+          color=" #DDE2FF"
+          opacity="0.7"
+        >
+          <Flex mx="4" boxSize="4" w="1rem" h="1rem">
+            <SlArrowLeftCircle />
+          </Flex>
+          Sair
+        </Flex>
+       
       </Flex>
       <Modal
           isCentered
@@ -166,28 +160,7 @@ const NavItemsMobileResident = function (props) {
             </ModalFooter>
           </ModalContent>
         </Modal>
-      <Flex
-          w="full"
-          align="center"
-          px="3rem"
-          py="3"
-          cursor="pointer"
-          role="group"
-          transition=".15 ease"
-          fontFamily="Mulish"
-          fontStyle="normal"
-          onClick={onOpen}
-          fontWeight={400}
-          fontSize="1rem"
-          letterSpacing="0.2"
-          color=" #DDE2FF"
-          opacity="0.7"
-        >
-          <Flex mx="4" boxSize="4" w="1rem" h="1rem">
-            <SlArrowLeftCircle />
-          </Flex>
-          Sair
-        </Flex>
+      
     </Flex>
   );
 };

@@ -280,7 +280,7 @@ const totalVolume = filteredData.reduce((total, datum) => {
             <TabPanels w="full" h="100%">
               {/* diario */}
               <TabPanel w="100%" h="100%">
-                <chakra.span display="flex" alignItems="center" color="#252733" fontSize="1rem" fontStyle="normal" fontWeight="600" justifyContent={"center"} fontFamily={"Mulish"}>Consumo geral {totalVolume.toFixed(3)}L</chakra.span>
+                <chakra.span display="flex" alignItems="center" color="#252733" fontSize="1rem" fontStyle="normal" fontWeight="600" justifyContent={"center"} fontFamily={"Mulish"}>Consumo geral {totalVolume.toFixed(2)}L</chakra.span>
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart
                     data={formattedData}
