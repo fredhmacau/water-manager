@@ -21,4 +21,4 @@ def view_image_of_resident(id_resident: str):
             else:
                 return msresponses.msg_request_not_found(msg="image not found")
     except Exception as exc:
-        raise msresponses.msg_request_bad(f"error:{exc}")
+        raise msresponses.msg_request_bad(f"error:try again later")

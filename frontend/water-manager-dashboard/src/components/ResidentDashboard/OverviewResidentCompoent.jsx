@@ -60,7 +60,7 @@ const OverviewComponentResident = React.memo((props) => {
 
 
   useEffect(() => {
-    const eventSource = new EventSource("http://127.0.0.1:8000/v1.0/resident/view-data");
+    const eventSource = new EventSource("https://drain-easy.onrender.com/v1.0/resident/view-data");
 
     eventSource.onmessage = (event) => {
       const newData = JSON.parse(event.data);
@@ -126,7 +126,7 @@ const totalVolume = filteredData.reduce((total, datum) => {
                   {residentInfo["info_resident"]["username"]}
                 </Text>
 
-                <Avatar mt={{ base: "0", lg: "-1.5" }} ml="2" src={`http://127.0.0.1:8000/v1.0/admin/resident/view_image_resident/${localStorage.getItem(
+                <Avatar mt={{ base: "0", lg: "-1.5" }} ml="2" src={`https://drain-easy.onrender.com/v1.0/admin/resident/view_image_resident/${localStorage.getItem(
                   "access_token"
                 )}`} size="sm" bg="blue.300" name={residentInfo["info_resident"]["username"]} >
                   {

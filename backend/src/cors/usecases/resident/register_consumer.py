@@ -22,4 +22,4 @@ def register_volume_and_fluxo(number_device,data):
         collection.insert_one(json_str)
 
     except Exception as e:
-        raise MSResponse.msg_request_bad(e)
+        raise MSResponse.msg_request_bad("error:try again later")

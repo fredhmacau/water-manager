@@ -1,5 +1,6 @@
 import {
   Avatar,
+  AvatarBadge,
   Box,
   chakra,
   Button,
@@ -132,7 +133,13 @@ const PackagesResidentComponent = React.memo((props) => {
                       size="sm"
                       bg="blue.300"
                       name={residentInfo["info_resident"]["username"]}
-                    />
+                    >
+                      {
+                    residentInfo["info_resident"]["status_payment"] == true ? (
+                      <AvatarBadge size='xs' boxSize='1.25em' bg='green' />
+                    ) : (<AvatarBadge size='xs' boxSize='1.25em' bg='tomato' />)
+                  }
+                    </Avatar>
                   </WrapItem>
                 </Wrap>
               </Flex>
@@ -313,22 +320,23 @@ const PackagesResidentComponent = React.memo((props) => {
               <PackageItem
                 imgPackage={tester1}
                 packageName="Pacote Simples"
-                packageDescription="O Pacote Simples oferece 200 litros de água por um preço acessível de 1500kz."
-                packagePrice="1500kz"
-                packageVolume="200l"
+                packageDescription="O Pacote Simples oferece 3 litros de água por um preço acessível de 1500kz."
+                packagePrice="300kz"
+                packageVolume="3L"
               />
               <PackageItem
                 imgPackage={tester2}
                 packageName="Pacote Família"
                 packageDescription="O Pacote Família é a escolha ideal para famílias que desejam manter seu consumo."
-                packageVolume="2000l"
+                packageVolume="5L"
+                packagePrice="500kz"
               />
               <PackageItem
                 imgPackage={tester3}
                 packageName="Pacote Premium"
                 packageDescription="O pacote premium de consumo de água é uma excelente opção para moradores."
-                packagePrice="32800kz"
-                packageVolume="20300l"
+                packagePrice="650kz"
+                packageVolume="7L"
               />
             </SimpleGrid>
           </Flex>

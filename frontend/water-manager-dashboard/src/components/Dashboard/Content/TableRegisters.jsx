@@ -56,12 +56,13 @@ const TableRegisters = React.memo((props) => {
       if(resp.status==200){
         toast({
           position: "top",
-          title: 'Pagamento validado!',
+          title: 'Morador removido!',
           description: "O morador foi eliminado com sucesso.",
           status: 'success',
           duration: 9000,
           isClosable: true,
         })
+        setSelectedId(null)
       }
 
     })

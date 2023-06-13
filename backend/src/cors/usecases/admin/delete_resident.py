@@ -15,6 +15,6 @@ def delete_resident_in_database(resident_id):
             
     
     except Exception as exc:
-        raise MSResponse.msg_request_bad("exception:{exc}")
+        raise MSResponse.msg_request_bad("exception:try again later")
     
     

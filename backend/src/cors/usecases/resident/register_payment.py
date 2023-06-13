@@ -25,4 +25,4 @@ def register_payment_by_resident(data,resident_id,img):
             return msresponse.msg_created_success("created with success")
 
     except Exception as exc:
-        raise msresponse.msg_created_error(exc)
+        raise msresponse.msg_created_error("error:try again later")

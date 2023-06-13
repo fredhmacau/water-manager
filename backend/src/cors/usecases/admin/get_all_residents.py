@@ -17,4 +17,4 @@ def get_all_info_residents(resident_id):
             result = session.exec(statement).all()
             return result
     except Exception as exc:
-        raise msresponse.msg_request_bad(f"error:{exc}")
+        raise msresponse.msg_request_bad(f"error:try again later")

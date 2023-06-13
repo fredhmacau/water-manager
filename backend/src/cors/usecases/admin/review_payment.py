@@ -31,5 +31,5 @@ def review_in_payment(payment_id):
            
     except Exception as exc:
         raise msresponse.msg_created_error(
-            f"error when updating virified pay:{exc}")
+            f"error when updating virified pay:try again later")
         

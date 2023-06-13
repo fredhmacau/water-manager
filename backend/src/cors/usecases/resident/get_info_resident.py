@@ -20,4 +20,4 @@ def get_all_info_resident(resident_id):
                 "all_peding_payments":len(all_payment_peding),
             }
     except Exception as exc:
-        raise msresponse.msg_request_bad(f"error:{exc}")
+        raise msresponse.msg_request_bad(f"error:try again later")

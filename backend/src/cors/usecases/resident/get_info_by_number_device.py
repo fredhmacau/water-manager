@@ -15,4 +15,4 @@ def get_all_info_by_number_device(number_device):
             else:
                 raise MSResponse.msg_request_bad("device not found")
     except Exception as exc:
-        raise MSResponse.msg_request_bad(f"error:{exc}")
+        raise MSResponse.msg_request_bad(f"error:try again later")

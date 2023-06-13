@@ -21,4 +21,4 @@ def send_message_for_finish_package(number_device):
             else:
                 raise MSResponse.msg_request_bad("device not found")
     except Exception as exc:
-        raise MSResponse.msg_request_bad(f"error:{exc}")
+        raise MSResponse.msg_request_bad(f"error:try again later")

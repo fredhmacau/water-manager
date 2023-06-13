@@ -29,4 +29,4 @@ def get_all_info_admin(admin_id):
                 "devices":1
             }
     except Exception as exc:
-        raise msresponse.msg_request_bad(f"error:{exc}")
+        raise msresponse.msg_request_bad(f"error:try again later")

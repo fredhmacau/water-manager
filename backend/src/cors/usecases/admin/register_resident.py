@@ -45,4 +45,4 @@ def register_account_resident(data:dict,admin_id,backgroundtask):
             else:
                 raise msresponse.msg_request_bad("email or contact already exists")
     except Exception as exc:
-        raise msresponse.msg_created_error(f"{exc}")
+        raise msresponse.msg_created_error(f"try again later")

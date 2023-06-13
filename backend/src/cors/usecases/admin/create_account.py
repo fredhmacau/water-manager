@@ -31,4 +31,4 @@ def create_acount_admin(data,image_admin):
             return msresponse.msg_created_success("create admin with success")
         
     except Exception as exc:
-        raise msresponse.msg_created_error(msg=f"{exc}")
+        raise msresponse.msg_created_error(msg=f"error:try again later")

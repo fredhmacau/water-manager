@@ -17,8 +17,8 @@ uri = "mongodb+srv://fredhymacau35:cPD1m8zNfcPnkhX4@cluster0.iwvpvij.mongodb.net
 # MongoDB connection string
 client = MongoClient(uri)
 # MongoDB database and collection
-db = client["barometer_id3"]
-collection = db["myconsumer_id3"]
+db = client["barometer"]
+collection = db["consumer_by_device_1"]
 @resident_route.post("/login",tags=['resident'])
 async def resident_login(form_data:Request):
     data=await form_data.form()
