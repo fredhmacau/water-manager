@@ -240,7 +240,7 @@ const PackagesComponent = React.memo((props) => {
             </ModalHeader>
             <ModalCloseButton />
             <ModalBody fontFamily="Mulish">
-              <Img src={`http://127.0.0.1:8000/v1.0/admin/view_image_payment/${selectedId}`} />
+              <Img src={`https://drain-easy.onrender.com/v1.0/admin/view_image_payment/${selectedId}`} />
             </ModalBody>
             <ModalFooter alignItems="start" justifyContent="flex-start">
               <Button

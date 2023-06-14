@@ -54,7 +54,7 @@ const NavbarMobileResident = function (props) {
       {
         menu && (
         
-            <NavItemsMobileResident/>
+            <NavItemsMobileResident onClick={setMenu.off}/>
         
             )
       }

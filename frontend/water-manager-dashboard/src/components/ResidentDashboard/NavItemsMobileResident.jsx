@@ -1,4 +1,4 @@
-import { Flex, HStack, Img, Text,  useDisclosure,  } from "@chakra-ui/react";
+import { Flex, HStack, IconButton, Img, Text,  useDisclosure,  } from "@chakra-ui/react";
 import SidebarContentResident from "./SidebarContentResident";
 //icons
 import logo from "../../assets/logo.png";
@@ -7,7 +7,7 @@ import pacotesIcon from "../../assets/icons/ticket.png";
 import registersIcon from "../../assets/icons/registers.png";
 import insertIcon from "../../assets/icons/insert.png";
 import configIcon from "../../assets/icons/config.png";
-import { SlArrowLeftCircle } from "react-icons/sl";
+import { SlArrowLeftCircle,SlArrowLeft } from "react-icons/sl";
 import {
   Modal,
   ModalOverlay,
@@ -63,6 +63,9 @@ const NavItemsMobileResident = function (props) {
           >
             Drain-easy
           </Text>
+        <Flex >
+        <IconButton ml="16px" variant="unstyled"  icon={<SlArrowLeft color="#A4A6B3"/>} onClick={props.onClick}/>
+        </Flex>
         </HStack>
       </Flex>
       <Flex w="full" mt="2rem" ml="-2.5rem" direction="column" alignItems="center">

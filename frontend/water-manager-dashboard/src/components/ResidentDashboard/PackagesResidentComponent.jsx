@@ -2,6 +2,10 @@ import {
   Avatar,
   AvatarBadge,
   Box,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
   chakra,
   Button,
   Flex,
@@ -146,7 +150,9 @@ const PackagesResidentComponent = React.memo((props) => {
             </HStack>
           </Flex>
           <Flex w="full" h="auto" px="4">
-            <chakra.form
+            {
+              residentInfo["info_resident"]["status_payment"] == false ? (
+                <chakra.form
               w="full"
               mt="5"
               onSubmit={handleSubmit(onRegisterPayment)}
@@ -305,6 +311,16 @@ const PackagesResidentComponent = React.memo((props) => {
                 </SimpleGrid>
               </Stack>
             </chakra.form>
+              ):(
+                <Alert mt="3rem" lineHeight="1.25rem"
+                fontSize="0.875rem"
+                fontFamily="mulish"
+                letterSpacing="0.3px" status='warning'  variant='left-accent'>
+                <AlertIcon />
+                Já possui um pacote ativo!
+              </Alert>
+              )
+            }
           </Flex>
           <Flex mt="2rem" w="full" h="auto">
             <SimpleGrid
