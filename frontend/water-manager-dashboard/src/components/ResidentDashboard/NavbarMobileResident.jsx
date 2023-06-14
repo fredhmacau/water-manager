@@ -23,6 +23,7 @@ const NavbarMobileResident = function (props) {
             color="#A4A6B3"
             letterSpacing="0.4px"
             opacity="0.7"
+            onClick={setMenu.off}
           >
             Drain-easy
           </Text>

@@ -63,9 +63,7 @@ const NavItemsMobileResident = function (props) {
           >
             Drain-easy
           </Text>
-        <Flex >
-        <IconButton ml="16px" variant="unstyled"  icon={<SlArrowLeft color="#A4A6B3"/>} onClick={props.onClick}/>
-        </Flex>
+        
         </HStack>
       </Flex>
       <Flex w="full" mt="2rem" ml="-2.5rem" direction="column" alignItems="center">
@@ -109,7 +107,28 @@ const NavItemsMobileResident = function (props) {
           </Flex>
           Sair
         </Flex>
-       
+        <Flex
+          w="full"
+          align="center"
+          px="3rem"
+          py="3"
+          cursor="pointer"
+          role="group"
+          transition=".15 ease"
+          fontFamily="Mulish"
+          fontStyle="normal"
+          onClick={props.onClick}
+          fontWeight={400}
+          fontSize="1rem"
+          letterSpacing="0.2"
+          color=" #DDE2FF"
+          opacity="0.7"
+        >
+          <Flex mx="4" boxSize="4" w="1rem" h="1rem">
+            <SlArrowLeft />
+          </Flex>
+          Fechar
+        </Flex>
       </Flex>
       <Modal
           isCentered

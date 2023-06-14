@@ -175,7 +175,7 @@ const PackagesResidentComponent = React.memo((props) => {
                 <SimpleGrid columns={6} spacing={6}>
                   <FormControl
                     as={GridItem}
-                    colSpan={[6, 3]}
+                    colSpan={{sm:12,lg:[6, 3]}}
                     isInvalid={errors.package_name}
                   >
                     <FormLabel
@@ -241,7 +241,7 @@ const PackagesResidentComponent = React.memo((props) => {
                     </Select>
                   </FormControl>
 
-                  <FormControl as={GridItem} colSpan={[6, 3]}>
+                  <FormControl as={GridItem}   colSpan={{sm:12,lg:[6, 3]}}>
                     <FormLabel
                       htmlFor="last_name"
                       fontStyle="normal"
@@ -282,9 +282,9 @@ const PackagesResidentComponent = React.memo((props) => {
                     />
                   </FormControl>
 
-                  <FormControl w="full" mt="1rem">
+                  <FormControl  as={GridItem}    colSpan={[6, 3]}  mt="1rem">
                     <Button
-                      w="md"
+                      w={{sm:"17rem",md:"md"}}
                       isLoading={isSubmitting}
                       display="flex"
                       flexDirection="column"

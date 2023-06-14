@@ -1,10 +1,10 @@
 import { Flex } from "@chakra-ui/react";
 import React from "react";
-import PackagesResidentComponent from "../components/ResidentDashboard/PackagesResidentComponent";
-import NavbarMobileResident from "../components/ResidentDashboard/NavItemsMobileResident";
 
+import OverviewComponentResident from "../components/ResidentDashboard/OverviewResidentCompoent";
 import UILayoutResident from "../components/ResidentDashboard/UILayoutResident";
-
+import NavbarMobileResident from "../components/ResidentDashboard/NavbarMobileResident";
+import PackagesResidentComponent from "../components/ResidentDashboard/PackagesResidentComponent";
 const PackagesResident = React.memo((props) => {
   return (
     <Flex w="full" h="auto"  direction="column" bg="#F7F8FC">
