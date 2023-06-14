@@ -52,7 +52,7 @@ const OverviewComponent = React.memo((props) => {
 
     eventSource.onmessage = (event) => {
       const newData = JSON.parse(event.data);
-      setData(data => [...data, newData]);
+      setData(data => [...data[data.length-3], newData]);
     };
 
     return () => {
