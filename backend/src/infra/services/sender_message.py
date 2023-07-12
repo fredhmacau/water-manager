@@ -25,8 +25,8 @@ def sender_sms(content,contact):
     * See Readme file for details.
     """
 
-    BASE_URL = "https://89j429.api.infobip.com"
-    API_KEY = "1561b64ff17845d043f9f03028089e93-ad1ab2e8-b2cf-4663-96ed-8972b3c3129c"
+    BASE_URL = "https://dmv3wv.api.infobip.com"
+    API_KEY = "57e02eef1e5db2a57d485a65a95a5718-36279eb5-58de-46c6-abdc-28e701ff98d2"
 
     SENDER = "InfoSMS"
     RECIPIENT = f"244{contact}"

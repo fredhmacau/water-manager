@@ -8,7 +8,7 @@ from src.cors.usecases.admin import review_in_payment
 from src.cors.usecases.admin import get_all_peding_payments
 from src.cors.usecases.admin import view_image_of_payment
 from src.cors.usecases.admin import delete_resident_in_database
-
+from src.cors.usecases.admin import alter_residence_resident
 class AdminEntity:
     """_summary_
     """
@@ -64,4 +64,9 @@ class AdminEntity:
     @classmethod
     def delete_resident(self,resident_id):
         resp=delete_resident_in_database(resident_id)
+        return resp
+    
+    @classmethod
+    def alter_residence(self,previous_residence,new_residence):
+        resp=alter_residence_resident(previous_residence,new_residence)
         return resp

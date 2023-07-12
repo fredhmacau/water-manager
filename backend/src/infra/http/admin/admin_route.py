@@ -73,3 +73,7 @@ async def review_payment(payment_id,token:str=Depends(oauth2)):
 @admin_route.delete("/delete-resident/{resident_id}",tags=['admin'])
 async def delete_resident(resident_id:str,token:str=Depends(oauth2)):
     return await adapter.delete_resident(resident_id)
+
+@admin_route.put("/alter-residence/{preview_residence}/{new_residence}",tags=['admin'])
+async def alter_residence(preview_residence:int,new_residence:str):
+    return await adapter.alter_residence(preview_residence,new_residence)

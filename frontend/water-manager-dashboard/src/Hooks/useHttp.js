@@ -8,6 +8,7 @@ import getPedingPayment from "./core/admin/getPedingPayment";
 import reviewPayment from "./core/admin/reviewPayment";
 import getInfoResident from "./core/resident/selectInfoResident";
 import sendPayment from "./core/resident/sendPayment";
+import alterResidence from "./core/admin/alterResidence";
 const useHttp = function () {
   const loginAdmin = async function (values) {
     const response = await adminLogin(values);
@@ -53,6 +54,9 @@ const useHttp = function () {
     const response = await sendPayment(package_name,img);
     return response;
   }
+  const updateResidence=async function(preview_residence,new_residence){
+    const response=await alterResidence(preview_residence,new_residence);
+  }
   return {
     loginAdmin,
     loginResident,
@@ -64,7 +68,7 @@ const useHttp = function () {
     viewAllResidents,
     viewPedngPayment,
     registerPayment,
-
+updateResidence,
     viewInfoResident,
   };
 };

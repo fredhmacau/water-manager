@@ -72,3 +72,7 @@ class FastAPIAdapter:
     @classmethod
     async def send_volume_and_fluxo(self,number_device,data):
         return resident_entity.send_volume_and_fluxo(number_device,data)
+    
+    @classmethod
+    async def alter_residence(self,preview_residence,new_residence):
+        return admin_entity.alter_residence(preview_residence,new_residence)
