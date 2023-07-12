@@ -13,5 +13,5 @@ sqlite_file_name="drain_easy_db.db"
 
 sql_url=f"sqlite:///{sqlite_file_name}"
 
-engine=create_engine(sql_url,echo=True)
+engine=create_engine(sql_url)
 create_session=Session(engine)
