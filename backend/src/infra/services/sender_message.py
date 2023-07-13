@@ -79,8 +79,8 @@ def sender_sms_finish(resident_name,packageName,contact):
     * See Readme file for details.
     """
 
-    BASE_URL = "https://vjznxp.api.infobip.com"
-    API_KEY = "ba9aae525c4887fb1126df80a64ddc61-3c7092d0-146b-4c4e-a0d4-7ca7dffb85e1"
+    BASE_URL = "https://dmv3wv.api.infobip.com"
+    API_KEY = "57e02eef1e5db2a57d485a65a95a5718-36279eb5-58de-46c6-abdc-28e701ff98d2"
 
     SENDER = "InfoSMS"
     RECIPIENT = f"244{contact}"
